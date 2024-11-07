@@ -2,6 +2,7 @@ package usecase_test
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	"github.com/mulukenhailu/Binary/domain"
@@ -14,30 +15,31 @@ import (
 func TestCreat(t *testing.T) {
 
 	mockRoleRepository := mocks.NewRoleRespository(t)
+	mockAddRole := &domain.RoleDto{
+		RoleName: "admin",
+		RegisteredBy : "admin",
+	}
+
 
 	t.Run("success", func(t *testing.T){
-		// mockRole := domain.Role{
-		// 	RoleId:1,
-		// 	RoleName: "admin",
-		// 	RegisteredBy: "admin",
-		// 	RegisteredDate:"2024-11-07 18:43:37.301586",
-		// }
-
-		mockAddRole := &domain.RoleDto{
-			RoleName: "admin",
-			RegisteredBy : "admin",
-		}
-
+		
 		mockRoleRepository.On("Create", mock.Anything, mockAddRole).Return(nil).Once()
 
 		u := usecase.NewRoleUsecase(mockRoleRepository)
 		err := u.Create(context.Background(), mockAddRole)
 
 		assert.NoError(t, err)
-
-
 		mockRoleRepository.AssertExpectations(t)
+	})
 
+	t.Run("erro", func(t *testing.T) {
+		mockRoleRepository.On("Create", mock.Anything, mockAddRole).Return(errors.New("Unexpected")).Once()
+		u := usecase.NewRoleUsecase(mockRoleRepository)
+
+		err := u.Create(context.Background(), mockAddRole)
+
+		assert.Error(t, err)
+		mockRoleRepository.AssertExpectations(t)
 
 	})
 }
