@@ -2,22 +2,27 @@ package usecase
 
 import (
 	"context"
+	"time"
+
 	"github.com/mulukenhailu/Binary/domain"
 )
 
 type roleUsercase struct {
 	roleRepository domain.RoleRespository
+	contextTimeout time.Duration
 }
 
-func NewRoleUsecase(roleRepository domain.RoleRespository) domain.RoleUsercase {
+func NewRoleUsecase(roleRepository domain.RoleRespository, timeout time.Duration) domain.RoleUsercase {
 	return &roleUsercase{
-		roleRepository: roleRepository,
+		roleRepository: roleRepository,	
+		contextTimeout: timeout,
 	}
 }
 
-
 func (r *roleUsercase) Create(c context.Context, role *domain.RoleDto) error {
-	return r.roleRepository.Create(c, role)
+	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
+	defer cancel()
+	return r.roleRepository.Create(ctx, role)
 }
 
 

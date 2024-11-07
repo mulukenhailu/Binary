@@ -9,6 +9,7 @@ import (
 type Env struct {
 	DbUrl string `mapstructure:"DB_URL"`
 	ServerAddress string `mapstructure:"SERVER_ADDRESS"`
+	ContextTimeout string `mapstructure:"CONTEXT_TIMEOUT"`
 }
 
 func NewEnv() *Env {
