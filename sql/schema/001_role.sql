@@ -1,5 +1,4 @@
 -- +goose Up
-
 CREATE TABLE Role (
     RoleId SERIAL PRIMARY KEY,
     RoleName VARCHAR(255) NOT NULL UNIQUE,

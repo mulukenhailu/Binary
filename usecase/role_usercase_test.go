@@ -19,24 +19,52 @@ func TestCreat(t *testing.T) {
 		RoleName: "test",
 		RegisteredBy : "test",
 	}
-
-
 	t.Run("success", func(t *testing.T){
 		
 		mockRoleRepository.On("Create", mock.Anything, mockAddRole).Return(nil).Once()
 
-		u := usecase.NewRoleUsecase(mockRoleRepository, time.Second * 2)
-		err := u.Create(context.Background(), mockAddRole)
+		uc := usecase.NewRoleUsecase(mockRoleRepository, time.Second * 2)
+		err := uc.Create(context.Background(), mockAddRole)
 
 		assert.NoError(t, err)
 		mockRoleRepository.AssertExpectations(t)
 	})
 
 	t.Run("erro", func(t *testing.T) {
-		mockRoleRepository.On("Create", mock.Anything, mockAddRole).Return(errors.New("Unexpected")).Once()
-		u := usecase.NewRoleUsecase(mockRoleRepository, time.Second * 2)
+		mockRoleRepository.On("Create", mock.Anything, mockAddRole).Return(errors.New("unexpected")).Once()
+		uc := usecase.NewRoleUsecase(mockRoleRepository, time.Second * 2)
 
-		err := u.Create(context.Background(), mockAddRole)
+		err := uc.Create(context.Background(), mockAddRole)
+
+		assert.Error(t, err)
+		mockRoleRepository.AssertExpectations(t)
+
+	})
+}
+
+func TestUpdate(t *testing.T){
+	mockRoleRepository := mocks.NewRoleRespository(t)
+	mockUpdateRoleDto := &domain.UpdateRoleDto{
+		PreviousRoleName : "test",
+		NewRoleName : "test",
+		NewRegisterName : "test",
+	}
+
+	t.Run("success", func(t *testing.T) {
+		mockRoleRepository.On("Update", mock.Anything, mockUpdateRoleDto).Return(nil).Once()
+
+		uc := usecase.NewRoleUsecase(mockRoleRepository, time.Second * 2)
+		err := uc.Update(context.Background(), mockUpdateRoleDto)
+
+		assert.NoError(t, err)
+		mockRoleRepository.AssertExpectations(t)
+	})
+
+	t.Run("fail", func(t *testing.T){
+		mockRoleRepository.On("Update", mock.Anything, mockUpdateRoleDto).Return(errors.New("unexpected")).Once()
+
+		uc := usecase.NewRoleUsecase(mockRoleRepository, time.Second * 2)
+		err := uc.Update(context.Background(), mockUpdateRoleDto)
 
 		assert.Error(t, err)
 		mockRoleRepository.AssertExpectations(t)

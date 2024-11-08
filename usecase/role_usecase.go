@@ -27,21 +27,29 @@ func (r *roleUsercase) Create(c context.Context, role *domain.RoleDto) error {
 
 
 func (r *roleUsercase) Delete(c context.Context, roleId int32) error {
-	return r.roleRepository.Delete(c, roleId)
+	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
+	defer cancel()
+	return r.roleRepository.Delete(ctx, roleId)
 }
 
 
 
-func (r *roleUsercase) Update(c context.Context, role *domain.RoleDto) error {
-	return r.roleRepository.Update(c, role)
+func (r *roleUsercase) Update(c context.Context, updateRole *domain.UpdateRoleDto) error {
+	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
+	defer cancel()
+	return r.roleRepository.Update(ctx, updateRole)
 }
 
-func (r *roleUsercase) FetchRoles(c context.Context) ([]domain.RoleDto, error) {
-	return r.roleRepository.FetchRoles(c)
+func (r *roleUsercase) FetchRoles(c context.Context) ([]domain.Role, error) {
+	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
+	defer cancel()
+	return r.roleRepository.FetchRoles(ctx)
 }
 
-func (r *roleUsercase) FetchByName(c context.Context, roleName string) (domain.RoleDto, error) {
-	return r.roleRepository.FetchByName(c, roleName)
+func (r *roleUsercase) FetchByName(c context.Context, roleName string) (domain.Role, error) {
+	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
+	defer cancel()
+	return r.roleRepository.FetchByName(ctx, roleName)
 }
 
 

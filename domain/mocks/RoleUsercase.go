@@ -51,22 +51,22 @@ func (_m *RoleUsercase) Delete(c context.Context, roleId int32) error {
 }
 
 // FetchByName provides a mock function with given fields: c, roleName
-func (_m *RoleUsercase) FetchByName(c context.Context, roleName string) (domain.RoleDto, error) {
+func (_m *RoleUsercase) FetchByName(c context.Context, roleName string) (domain.Role, error) {
 	ret := _m.Called(c, roleName)
 
 	if len(ret) == 0 {
 		panic("no return value specified for FetchByName")
 	}
 
-	var r0 domain.RoleDto
+	var r0 domain.Role
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, string) (domain.RoleDto, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string) (domain.Role, error)); ok {
 		return rf(c, roleName)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string) domain.RoleDto); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string) domain.Role); ok {
 		r0 = rf(c, roleName)
 	} else {
-		r0 = ret.Get(0).(domain.RoleDto)
+		r0 = ret.Get(0).(domain.Role)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string) error); ok {
@@ -79,23 +79,23 @@ func (_m *RoleUsercase) FetchByName(c context.Context, roleName string) (domain.
 }
 
 // FetchRoles provides a mock function with given fields: c
-func (_m *RoleUsercase) FetchRoles(c context.Context) ([]domain.RoleDto, error) {
+func (_m *RoleUsercase) FetchRoles(c context.Context) ([]domain.Role, error) {
 	ret := _m.Called(c)
 
 	if len(ret) == 0 {
 		panic("no return value specified for FetchRoles")
 	}
 
-	var r0 []domain.RoleDto
+	var r0 []domain.Role
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context) ([]domain.RoleDto, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context) ([]domain.Role, error)); ok {
 		return rf(c)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context) []domain.RoleDto); ok {
+	if rf, ok := ret.Get(0).(func(context.Context) []domain.Role); ok {
 		r0 = rf(c)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]domain.RoleDto)
+			r0 = ret.Get(0).([]domain.Role)
 		}
 	}
 
@@ -108,17 +108,17 @@ func (_m *RoleUsercase) FetchRoles(c context.Context) ([]domain.RoleDto, error) 
 	return r0, r1
 }
 
-// Update provides a mock function with given fields: c, role
-func (_m *RoleUsercase) Update(c context.Context, role *domain.RoleDto) error {
-	ret := _m.Called(c, role)
+// Update provides a mock function with given fields: c, updateRole
+func (_m *RoleUsercase) Update(c context.Context, updateRole *domain.UpdateRoleDto) error {
+	ret := _m.Called(c, updateRole)
 
 	if len(ret) == 0 {
 		panic("no return value specified for Update")
 	}
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, *domain.RoleDto) error); ok {
-		r0 = rf(c, role)
+	if rf, ok := ret.Get(0).(func(context.Context, *domain.UpdateRoleDto) error); ok {
+		r0 = rf(c, updateRole)
 	} else {
 		r0 = ret.Error(0)
 	}

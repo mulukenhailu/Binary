@@ -18,7 +18,11 @@ func NewRoleRouter(env *bootstrap.Env, timeout time.Duration, db *sql.DB, group 
 		RoleUsecase:  usecase.NewRoleUsecase(rr, timeout),
 	}
 
-	group.POST("/roles", rc.Create)
+	group.GET("/role", rc.FetchByName)
+	group.GET("/roles", rc.FetchRoles)
+	group.POST("/newrole", rc.Create)
+	group.POST("/updaterole", rc.Update)
+	group.POST("/deleterole", rc.Delete)
 
 }
 
