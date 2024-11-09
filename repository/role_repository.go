@@ -24,31 +24,12 @@ func NewRoleRepository(db *sql.DB) domain.RoleRespository {
 // Create implements domain.RoleRespository.
 func (rr *roleRepository) Create(c context.Context, role *domain.RoleDto) error {
 
-	tx, err := rr.db.Begin()
-	if err != nil{
-		return err
-	}
-
-	defer tx.Rollback()
-
 	roleParam := database.CreateRoleParams{
 		Rolename : role.RoleName,
 		Registeredby : role.RegisteredBy,
 	}
-
-	qtx := rr.pg.WithTx(tx)
-
-	_, err = qtx.CreateRole(c, roleParam)
-	if err != nil{
-		return err
-	}
-	
-	_, err = qtx.ResetRoleId(c)
-	if err != nil{
-		return err
-	}
-
-	return tx.Commit()
+	_, err := rr.pg.CreateRole(c, roleParam)
+	return err
 }
 
 // Delete implements domain.RoleRespository.

@@ -3,9 +3,6 @@ INSERT INTO role(rolename, registeredby)
 VALUES($1, $2)
 RETURNING *;
 
--- name: ResetRoleId :one
-SELECT setval('role_roleid_seq', (SELECT MAX(RoleId) FROM Role));
-
 -- name: DeleteRole :one
 DELETE FROM Role
 WHERE RoleId = $1

@@ -100,17 +100,6 @@ func (q *Queries) FetchRoles(ctx context.Context) ([]Role, error) {
 	return items, nil
 }
 
-const resetRoleId = `-- name: ResetRoleId :one
-SELECT setval('role_roleid_seq', (SELECT MAX(RoleId) FROM Role))
-`
-
-func (q *Queries) ResetRoleId(ctx context.Context) (int64, error) {
-	row := q.db.QueryRowContext(ctx, resetRoleId)
-	var setval int64
-	err := row.Scan(&setval)
-	return setval, err
-}
-
 const updateRole = `-- name: UpdateRole :one
 UPDATE Role
 SET RoleName = $2, RegisteredBy = $3
