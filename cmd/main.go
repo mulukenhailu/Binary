@@ -13,7 +13,6 @@ import (
 
 func main() {
 
-
 	app := bootstrap.App()
 	env := app.Env
 	conn := app.Conn
