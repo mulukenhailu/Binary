@@ -103,18 +103,18 @@ func (q *Queries) FetchRoles(ctx context.Context) ([]Role, error) {
 const updateRole = `-- name: UpdateRole :one
 UPDATE Role
 SET RoleName = $2, RegisteredBy = $3
-WHERE RoleName = $1
+WHERE RoleId = $1
 RETURNING roleid, rolename, registeredby, registereddate
 `
 
 type UpdateRoleParams struct {
+	Roleid       int32
 	Rolename     string
-	Rolename_2   string
 	Registeredby string
 }
 
 func (q *Queries) UpdateRole(ctx context.Context, arg UpdateRoleParams) (Role, error) {
-	row := q.db.QueryRowContext(ctx, updateRole, arg.Rolename, arg.Rolename_2, arg.Registeredby)
+	row := q.db.QueryRowContext(ctx, updateRole, arg.Roleid, arg.Rolename, arg.Registeredby)
 	var i Role
 	err := row.Scan(
 		&i.Roleid,

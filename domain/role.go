@@ -11,8 +11,8 @@ type RoleDto struct{
 }
 
 type UpdateRoleDto struct{
-	PreviousRoleName string `json:"revious_role_name"`
-	NewRoleName string `json:"new_role_name"`
+	RoleId int32 `json:"role_id"`
+	RoleName string `json:"role_name"`
 	NewRegisterName string `json:"new_register_name"`
 }
 
@@ -41,7 +41,7 @@ type RoleRespository interface{
 	FetchByName(c context.Context, roleName string)				(Role, error)
 }
 
-type RoleUsercase interface{
+type RoleUsecase interface{
 	Create(c context.Context, role *RoleDto) 					error
 	Update(c context.Context, updateRole *UpdateRoleDto) 		error
 	Delete(c context.Context, roleId int32) 					error

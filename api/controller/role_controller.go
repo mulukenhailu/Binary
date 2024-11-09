@@ -8,7 +8,7 @@ import (
 )
 
 type RoleController struct {
-	RoleUsecase domain.RoleUsercase
+	RoleUsecase domain.RoleUsecase
 }
 
 

@@ -11,7 +11,7 @@ RETURNING *;
 -- name: UpdateRole :one
 UPDATE Role
 SET RoleName = $2, RegisteredBy = $3
-WHERE RoleName = $1
+WHERE RoleId = $1
 RETURNING *;
 
 -- name: FetchRoles :many

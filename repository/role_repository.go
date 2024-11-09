@@ -11,13 +11,11 @@ import (
 
 type roleRepository struct {
 	pg *database.Queries
-	db *sql.DB
 }
 
 func NewRoleRepository(db *sql.DB) domain.RoleRespository {
 	return &roleRepository{
 		pg:database.New(db),
-		db:db,
 	}
 }
 
@@ -42,8 +40,8 @@ func (rr *roleRepository) Delete(c context.Context, roleId int32) error {
 func (rr *roleRepository) Update(c context.Context, updatedRole *domain.UpdateRoleDto) error {
 
 	newRole := database.UpdateRoleParams{
-		Rolename     :updatedRole.PreviousRoleName,
-		Rolename_2   :updatedRole.NewRoleName,
+		Roleid    :updatedRole.RoleId,
+		Rolename   :updatedRole.RoleName,
 		Registeredby :updatedRole.NewRegisterName,
 	}
 

@@ -7,26 +7,26 @@ import (
 	"github.com/mulukenhailu/Binary/domain"
 )
 
-type roleUsercase struct {
+type roleUsecase struct {
 	roleRepository domain.RoleRespository
 	contextTimeout time.Duration
 }
 
-func NewRoleUsecase(roleRepository domain.RoleRespository, timeout time.Duration) domain.RoleUsercase {
-	return &roleUsercase{
+func NewRoleUsecase(roleRepository domain.RoleRespository, timeout time.Duration) domain.RoleUsecase {
+	return &roleUsecase{
 		roleRepository: roleRepository,	
 		contextTimeout: timeout,
 	}
 }
 
-func (r *roleUsercase) Create(c context.Context, role *domain.RoleDto) error {
+func (r *roleUsecase) Create(c context.Context, role *domain.RoleDto) error {
 	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
 	defer cancel()
 	return r.roleRepository.Create(ctx, role)
 }
 
 
-func (r *roleUsercase) Delete(c context.Context, roleId int32) error {
+func (r *roleUsecase) Delete(c context.Context, roleId int32) error {
 	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
 	defer cancel()
 	return r.roleRepository.Delete(ctx, roleId)
@@ -34,19 +34,19 @@ func (r *roleUsercase) Delete(c context.Context, roleId int32) error {
 
 
 
-func (r *roleUsercase) Update(c context.Context, updateRole *domain.UpdateRoleDto) error {
+func (r *roleUsecase) Update(c context.Context, updateRole *domain.UpdateRoleDto) error {
 	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
 	defer cancel()
 	return r.roleRepository.Update(ctx, updateRole)
 }
 
-func (r *roleUsercase) FetchRoles(c context.Context) ([]domain.Role, error) {
+func (r *roleUsecase) FetchRoles(c context.Context) ([]domain.Role, error) {
 	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
 	defer cancel()
 	return r.roleRepository.FetchRoles(ctx)
 }
 
-func (r *roleUsercase) FetchByName(c context.Context, roleName string) (domain.Role, error) {
+func (r *roleUsecase) FetchByName(c context.Context, roleName string) (domain.Role, error) {
 	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
 	defer cancel()
 	return r.roleRepository.FetchByName(ctx, roleName)
