@@ -13,29 +13,29 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func TestCreat(t *testing.T) {
+func TestCreateRole(t *testing.T) {
 
 	mockRoleRepository := mocks.NewRoleRespository(t)
-	mockAddRole := &domain.RoleDto{
+	mockAddRoleDto := &domain.RoleDto{
 		RoleName:     "test",
 		RegisteredBy: "test",
 	}
 	t.Run("success", func(t *testing.T) {
 
-		mockRoleRepository.On("Create", mock.Anything, mockAddRole).Return(nil).Once()
+		mockRoleRepository.On("Create", mock.Anything, mockAddRoleDto).Return(nil).Once()
 
 		uc := usecase.NewRoleUsecase(mockRoleRepository, time.Second*2)
-		err := uc.Create(context.Background(), mockAddRole)
+		err := uc.Create(context.Background(), mockAddRoleDto)
 
 		assert.NoError(t, err)
 		mockRoleRepository.AssertExpectations(t)
 	})
 
 	t.Run("erro", func(t *testing.T) {
-		mockRoleRepository.On("Create", mock.Anything, mockAddRole).Return(errors.New("unexpected")).Once()
+		mockRoleRepository.On("Create", mock.Anything, mockAddRoleDto).Return(errors.New("unexpected")).Once()
 		uc := usecase.NewRoleUsecase(mockRoleRepository, time.Second*2)
 
-		err := uc.Create(context.Background(), mockAddRole)
+		err := uc.Create(context.Background(), mockAddRoleDto)
 
 		assert.Error(t, err)
 		mockRoleRepository.AssertExpectations(t)
@@ -43,7 +43,7 @@ func TestCreat(t *testing.T) {
 	})
 }
 
-func TestUpdate(t *testing.T) {
+func TestUpdateRole(t *testing.T) {
 	mockRoleRepository := mocks.NewRoleRespository(t)
 	mockUpdateRoleDto := &domain.UpdateRoleDto{
 		RoleId: 1,
@@ -73,7 +73,7 @@ func TestUpdate(t *testing.T) {
 	})
 }
 
-func TestDelete(t *testing.T) {
+func TestDeleteRole(t *testing.T) {
 	mockRoleRepository := mocks.NewRoleRespository(t)
 	mockDeleteRoleDto := domain.DeleteRoleDto{
 		RoleId: 1,
@@ -98,7 +98,7 @@ func TestDelete(t *testing.T) {
 	})
 }
 
-func TestFetchByName(t *testing.T) {
+func TestFetchByNameRole(t *testing.T) {
 	mockRoleRepository := mocks.NewRoleRespository(t)
 	mockFetchByNameDto := domain.FetchByNameDto{
 		RoleName: "test",
@@ -175,6 +175,5 @@ func TestFetchRoles(t *testing.T){
 				assert.Equal(t, []domain.Role{}, roles)
 				mockRoleRespository.AssertExpectations(t)
 			})
-
 	}
 		
