@@ -28,7 +28,7 @@ func (rc *RoleController) Create(c *gin.Context){
 		return 
 	}
 
-	c.JSON(http.StatusOK, domain.SucessResponse{Message: "role created."})
+	c.JSON(http.StatusCreated, domain.SucessResponse{Message: "role created."})
 }
 
 

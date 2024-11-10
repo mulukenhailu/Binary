@@ -19,37 +19,37 @@ func NewRoleUsecase(roleRepository domain.RoleRespository, timeout time.Duration
 	}
 }
 
-func (r *roleUsecase) Create(c context.Context, role *domain.RoleDto) error {
-	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
+func (ru *roleUsecase) Create(c context.Context, role *domain.RoleDto) error {
+	ctx, cancel := context.WithTimeout(c, ru.contextTimeout)
 	defer cancel()
-	return r.roleRepository.Create(ctx, role)
+	return ru.roleRepository.Create(ctx, role)
 }
 
 
-func (r *roleUsecase) Delete(c context.Context, roleId int32) error {
-	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
+func (ru *roleUsecase) Delete(c context.Context, roleId int32) error {
+	ctx, cancel := context.WithTimeout(c, ru.contextTimeout)
 	defer cancel()
-	return r.roleRepository.Delete(ctx, roleId)
+	return ru.roleRepository.Delete(ctx, roleId)
 }
 
 
 
-func (r *roleUsecase) Update(c context.Context, updateRole *domain.UpdateRoleDto) error {
-	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
+func (ru *roleUsecase) Update(c context.Context, updateRole *domain.UpdateRoleDto) error {
+	ctx, cancel := context.WithTimeout(c, ru.contextTimeout)
 	defer cancel()
-	return r.roleRepository.Update(ctx, updateRole)
+	return ru.roleRepository.Update(ctx, updateRole)
 }
 
-func (r *roleUsecase) FetchRoles(c context.Context) ([]domain.Role, error) {
-	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
+func (ru *roleUsecase) FetchRoles(c context.Context) ([]domain.Role, error) {
+	ctx, cancel := context.WithTimeout(c, ru.contextTimeout)
 	defer cancel()
-	return r.roleRepository.FetchRoles(ctx)
+	return ru.roleRepository.FetchRoles(ctx)
 }
 
-func (r *roleUsecase) FetchByName(c context.Context, roleName string) (domain.Role, error) {
-	ctx, cancel := context.WithTimeout(c, r.contextTimeout)
+func (ru *roleUsecase) FetchByName(c context.Context, roleName string) (domain.Role, error) {
+	ctx, cancel := context.WithTimeout(c, ru.contextTimeout)
 	defer cancel()
-	return r.roleRepository.FetchByName(ctx, roleName)
+	return ru.roleRepository.FetchByName(ctx, roleName)
 }
 
 

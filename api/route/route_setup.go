@@ -10,6 +10,7 @@ import (
 
 func Setup(env *bootstrap.Env, timeout time.Duration, db *sql.DB, gin *gin.Engine) {
 
-	proctedRoute := gin.Group("")
-	NewRoleRouter(env, timeout, db, proctedRoute)
+	protectedRoute := gin.Group("")
+	NewRoleRouter(env, timeout, db, protectedRoute)
+	NewDeviceRouter(env, timeout, db, protectedRoute)
 }

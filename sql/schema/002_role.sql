@@ -9,7 +9,7 @@ CREATE TABLE Device (
     BlockNumber VARCHAR(50),
     RegisteredBy VARCHAR(100) NOT NULL,
     RegisteredDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CHECK (Port ~ '^\d{4}$')
+    CHECK (Port ~ '^\d{4,5}$')
 );
 
 -- +goose Down
