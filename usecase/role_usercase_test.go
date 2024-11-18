@@ -16,7 +16,7 @@ import (
 func TestCreateRole(t *testing.T) {
 
 	mockRoleRepository := mocks.NewRoleRespository(t)
-	mockAddRoleDto := &domain.RoleDto{
+	mockAddRoleDto := &domain.CreateRoleDto{
 		RoleName:     "test",
 		RegisteredBy: "test",
 	}

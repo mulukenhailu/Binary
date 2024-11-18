@@ -14,7 +14,7 @@ type RoleController struct {
 
 
 func (rc *RoleController) Create(c *gin.Context){
-	var RoleDto domain.RoleDto
+	var RoleDto domain.CreateRoleDto
 
 	err := c.ShouldBindJSON(&RoleDto)
 	if err != nil{

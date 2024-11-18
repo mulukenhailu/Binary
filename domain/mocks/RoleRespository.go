@@ -15,7 +15,7 @@ type RoleRespository struct {
 }
 
 // Create provides a mock function with given fields: c, createRoleDto
-func (_m *RoleRespository) Create(c context.Context, createRoleDto *domain.RoleDto) error {
+func (_m *RoleRespository) Create(c context.Context, createRoleDto *domain.CreateRoleDto) error {
 	ret := _m.Called(c, createRoleDto)
 
 	if len(ret) == 0 {
@@ -23,7 +23,7 @@ func (_m *RoleRespository) Create(c context.Context, createRoleDto *domain.RoleD
 	}
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, *domain.RoleDto) error); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, *domain.CreateRoleDto) error); ok {
 		r0 = rf(c, createRoleDto)
 	} else {
 		r0 = ret.Error(0)

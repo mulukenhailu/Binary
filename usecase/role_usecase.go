@@ -19,7 +19,7 @@ func NewRoleUsecase(roleRepository domain.RoleRespository, timeout time.Duration
 	}
 }
 
-func (ru *roleUsecase) Create(c context.Context, role *domain.RoleDto) error {
+func (ru *roleUsecase) Create(c context.Context, role *domain.CreateRoleDto) error {
 	ctx, cancel := context.WithTimeout(c, ru.contextTimeout)
 	defer cancel()
 	return ru.roleRepository.Create(ctx, role)

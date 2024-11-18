@@ -20,7 +20,7 @@ func NewRoleRepository(db *sql.DB) domain.RoleRespository {
 }
 
 // Create implements domain.RoleRespository.
-func (rr *roleRepository) Create(c context.Context, role *domain.RoleDto) error {
+func (rr *roleRepository) Create(c context.Context, role *domain.CreateRoleDto) error {
 
 	roleParam := database.CreateRoleParams{
 		Rolename : role.RoleName,

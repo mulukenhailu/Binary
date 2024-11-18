@@ -15,7 +15,7 @@ type RoleUsecase struct {
 }
 
 // Create provides a mock function with given fields: c, role
-func (_m *RoleUsecase) Create(c context.Context, role *domain.RoleDto) error {
+func (_m *RoleUsecase) Create(c context.Context, role *domain.CreateRoleDto) error {
 	ret := _m.Called(c, role)
 
 	if len(ret) == 0 {
@@ -23,7 +23,7 @@ func (_m *RoleUsecase) Create(c context.Context, role *domain.RoleDto) error {
 	}
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, *domain.RoleDto) error); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, *domain.CreateRoleDto) error); ok {
 		r0 = rf(c, role)
 	} else {
 		r0 = ret.Error(0)
