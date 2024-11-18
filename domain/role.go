@@ -34,8 +34,8 @@ type DeleteRoleDto struct{
 
 
 type RoleRespository interface{
-	Create(c context.Context, role *RoleDto) 					error
-	Update(c context.Context, updateRole *UpdateRoleDto) 		error
+	Create(c context.Context, createRoleDto *RoleDto) 					error
+	Update(c context.Context, updateRoleDto *UpdateRoleDto) 		error
 	Delete(c context.Context, roleId int32) 					error
 	FetchRoles(c context.Context) 								([]Role, error)
 	FetchByName(c context.Context, roleName string)				(Role, error)

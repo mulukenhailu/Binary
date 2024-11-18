@@ -14,9 +14,9 @@ type DeviceUsecase struct {
 	mock.Mock
 }
 
-// Create provides a mock function with given fields: c, device
-func (_m *DeviceUsecase) Create(c context.Context, device *domain.CreateDeviceDto) error {
-	ret := _m.Called(c, device)
+// Create provides a mock function with given fields: c, createDeviceDto
+func (_m *DeviceUsecase) Create(c context.Context, createDeviceDto *domain.CreateDeviceDto) error {
+	ret := _m.Called(c, createDeviceDto)
 
 	if len(ret) == 0 {
 		panic("no return value specified for Create")
@@ -24,7 +24,7 @@ func (_m *DeviceUsecase) Create(c context.Context, device *domain.CreateDeviceDt
 
 	var r0 error
 	if rf, ok := ret.Get(0).(func(context.Context, *domain.CreateDeviceDto) error); ok {
-		r0 = rf(c, device)
+		r0 = rf(c, createDeviceDto)
 	} else {
 		r0 = ret.Error(0)
 	}

@@ -46,20 +46,20 @@ type FetchByCampusDto struct{
 
 
 type DeviceUsecase interface {
-	Create(c context.Context, device *CreateDeviceDto) error
+	Create(c context.Context, createDeviceDto *CreateDeviceDto) error
 	Update(c context.Context, updateDeviceDto *UpdateDeviceDto) error
-	Delete(c context.Context, deviceId int32) error
-	FetchDevices(c context.Context) ([]Device, error)
-	FetchByCampus(c context.Context, campusName string)([]Device, error)
+	Delete(c context.Context, deviceId int32)                   error
+	FetchDevices(c context.Context)                             ([]Device, error)
+	FetchByCampus(c context.Context, campusName string)         ([]Device, error)
 }
 
 
 type DeviceRepository interface{
-	Create(c context.Context, device *CreateDeviceDto) error
-	Update(c context.Context, updateDeviceDto *UpdateDeviceDto) error
-	Delete(c context.Context, deviceId int32) error
-	FetchDevices(c context.Context) ([]Device, error)
-	FetchByCampus(c context.Context, campusName string)([]Device, error)
+	Create(c context.Context, device *CreateDeviceDto)           error
+	Update(c context.Context, updateDeviceDto *UpdateDeviceDto)  error
+	Delete(c context.Context, deviceId int32)                    error
+	FetchDevices(c context.Context)                              ([]Device, error)
+	FetchByCampus(c context.Context, campusName string)          ([]Device, error)
 }
 
 

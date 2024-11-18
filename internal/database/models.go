@@ -8,6 +8,21 @@ import (
 	"database/sql"
 )
 
+type Appuser struct {
+	Userid          int32
+	Roleid          int32
+	Username        string
+	Firstname       string
+	Fathername      string
+	Grandfathername string
+	Password        string
+	Phonenumber     string
+	Address         string
+	Email           sql.NullString
+	Registeredby    string
+	Registereddate  sql.NullTime
+}
+
 type Device struct {
 	Deviceid       int32
 	Serialnumber   sql.NullString

@@ -20,6 +20,7 @@ func ConvertDbRolesToDomainRoles(dbRoles []database.Role) []domain.Role{
 
 func ConvertDbDevicesToDomainDevices(dbDevices []database.Device)[]domain.Device{
 	domainDevices := make([]domain.Device, len(dbDevices))
+
 	for i, dbDevice := range dbDevices{
 		domainDevices[i] = domain.Device{
 			DeviceId 			: dbDevice.Deviceid,
@@ -35,3 +36,26 @@ func ConvertDbDevicesToDomainDevices(dbDevices []database.Device)[]domain.Device
 	}
 	return domainDevices
 }
+
+func ConvertDbUserToDomainUser(dbUsers []database.Appuser)[]domain.User{
+	domainUsers := make([]domain.User, len(dbUsers))
+
+	for i, dbUser := range dbUsers{
+		domainUsers[i] = domain.User{
+			UserId          :dbUser.Userid,
+			RoleId          :dbUser.Userid,
+			UserName        :dbUser.Username,
+			FirstName       :dbUser.Firstname,
+			FatherName      :dbUser.Fathername,
+			GrandFatherName :dbUser.Grandfathername,
+			Password        :dbUser.Password,
+			PhoneNumber     :dbUser.Phonenumber,
+			Address         :dbUser.Address,
+			Email          	:dbUser.Email.String,
+			RegisteredBy 	:dbUser.Registeredby,
+			RegisteredDate 	:dbUser.Registereddate.Time.String(),
+		}
+	}
+	return domainUsers
+}
+
