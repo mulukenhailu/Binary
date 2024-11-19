@@ -13,5 +13,5 @@ type LoginResponseDto struct {
 
 type LoginUsecase interface {
 	FetchByUserName(c context.Context, userName string) (User, error)
-	CreateAccessToken(user *User, secret string, expiry int)(accessToken string, err error)
+	CreateAccessToken(user *CreateUserDto, secret string, expiry int)(accessToken string, err error)
 }

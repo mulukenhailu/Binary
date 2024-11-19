@@ -11,7 +11,18 @@ import (
 )
 
 const createUser = `-- name: CreateUser :one
-INSERT INTO AppUser(RoleId, UserName, FirstName, FatherName, GrandFatherName, Password, PhoneNumber, Address, Email, RegisteredBy)
+INSERT INTO AppUser(
+    RoleId, 
+    UserName, 
+    FirstName, 
+    FatherName, 
+    GrandFatherName, 
+    Password, 
+    PhoneNumber, 
+    Address, 
+    Email, 
+    RegisteredBy
+    )
 VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
 RETURNING userid, roleid, username, firstname, fathername, grandfathername, password, phonenumber, address, email, registeredby, registereddate
 `
@@ -209,7 +220,17 @@ func (q *Queries) FetchUsers(ctx context.Context) ([]Appuser, error) {
 
 const updateUser = `-- name: UpdateUser :one
 UPDATE AppUser
-SET RoleId = $2, UserName= $3, FirstName = $4, FatherName = $5, GrandFatherName = $6, Password= $7, PhoneNumber = $8, Address = $9, Email = $10, RegisteredBy = $11
+SET 
+    RoleId = $2, 
+    UserName= $3, 
+    FirstName = $4, 
+    FatherName = $5, 
+    GrandFatherName = $6, 
+    Password= $7, 
+    PhoneNumber = $8, 
+    Address = $9, 
+    Email = $10, 
+    RegisteredBy = $11
 WHERE UserId = $1
 RETURNING userid, roleid, username, firstname, fathername, grandfathername, password, phonenumber, address, email, registeredby, registereddate
 `

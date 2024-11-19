@@ -46,7 +46,7 @@ func (ur *userRespository) Delete(c context.Context, userId int32) error {
 }
 
 // FetchByRoleName implements domain.UserRepository.
-func (ur *userRespository) FetchByRoleName(c context.Context, roleId int32) ([]domain.User, error) {
+func (ur *userRespository) FetchByRoleId(c context.Context, roleId int32) ([]domain.User, error) {
 	dbUsers, err := ur.pg.FetchByRoleName(c, roleId)
 	domainUsers := utils.ConvertDbUserToDomainUser(dbUsers)
 	return domainUsers, err

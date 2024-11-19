@@ -13,4 +13,7 @@ func Setup(env *bootstrap.Env, timeout time.Duration, db *sql.DB, gin *gin.Engin
 	protectedRoute := gin.Group("")
 	NewRoleRouter(env, timeout, db, protectedRoute)
 	NewDeviceRouter(env, timeout, db, protectedRoute)
+	NewSignupRouter(env, timeout, db, protectedRoute)
+	NewUserManagerRouter(env, timeout, db, protectedRoute)
+	NewLoginRouter(env, timeout, db, protectedRoute)
 }

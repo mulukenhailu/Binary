@@ -43,7 +43,7 @@ func ConvertDbUserToDomainUser(dbUsers []database.Appuser)[]domain.User{
 	for i, dbUser := range dbUsers{
 		domainUsers[i] = domain.User{
 			UserId          :dbUser.Userid,
-			RoleId          :dbUser.Userid,
+			RoleId          :dbUser.Roleid,
 			UserName        :dbUser.Username,
 			FirstName       :dbUser.Firstname,
 			FatherName      :dbUser.Fathername,

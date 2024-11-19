@@ -7,9 +7,12 @@ import (
 
 
 type Env struct {
-	DbUrl string `mapstructure:"DB_URL"`
-	ServerAddress string `mapstructure:"SERVER_ADDRESS"`
-	ContextTimeout string `mapstructure:"CONTEXT_TIMEOUT"`
+	DbUrl 					string 	`mapstructure:"DB_URL"`
+	ServerAddress 			string 	`mapstructure:"SERVER_ADDRESS"`
+	AccessTokenSecret 		string 	`mapstructure:"ACCESS_TOKEN_SECRET"`
+	RefreshTokenSecret 		string 	`mapstructure:"REFRESH_TOKEN_SECRET"` 
+	ContextTimeout 			int 	`mapstructure:"CONTEXT_TIMEOUT"`
+	AccessTokenExpiryHour 	int 	`mapstructure:"ACCESS_TOKEN_EXPIRY_HOUR"`
 }
 
 func NewEnv() *Env {

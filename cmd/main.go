@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"time"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
@@ -19,13 +18,8 @@ func main() {
 
 	db := sql.OpenDB(conn)
 	defer db.Close()
-
-	timeoutInt, err := strconv.Atoi(env.ContextTimeout)
-	if err != nil {
-		panic(err)
-	}
 	
-	timeout := time.Duration(timeoutInt) * time.Second
+	timeout := time.Duration(env.ContextTimeout) * time.Second
 	r := gin.Default()
 
 	route.Setup(env, timeout, db, r)

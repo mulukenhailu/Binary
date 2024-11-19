@@ -28,7 +28,7 @@ func (lu *loginUsecase) FetchByUserName(c context.Context, userName string) (dom
 }
 
 // CreateAccessToken implements domain.LoginUsecase.
-func (lu *loginUsecase) CreateAccessToken(user *domain.User, secret string, expiry int) (accessToken string, err error) {
+func (lu *loginUsecase) CreateAccessToken(user *domain.CreateUserDto, secret string, expiry int) (accessToken string, err error) {
 	return utils.CreateAccessToken(user, secret, expiry)
 }
 
