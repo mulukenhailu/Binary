@@ -60,7 +60,7 @@ type UserRepository interface {
 	Create(c context.Context, createUserDto *CreateUserDto) error
 	Update(c context.Context, updateUserDto *UpdateUserDto) error 
 	Delete(c context.Context, userId int32) 				error
-	FetchByRoleId(c context.Context, roleId int32)		([]User, error)
+	FetchByRoleId(c context.Context, roleId int32)			([]User, error)
 	FetchByUserName(c context.Context, userName string)		(User, error)
 	FetchUsers(c context.Context)							([]User, error)
 }

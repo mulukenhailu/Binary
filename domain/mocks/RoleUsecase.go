@@ -108,9 +108,9 @@ func (_m *RoleUsecase) FetchRoles(c context.Context) ([]domain.Role, error) {
 	return r0, r1
 }
 
-// Update provides a mock function with given fields: c, updateRole
-func (_m *RoleUsecase) Update(c context.Context, updateRole *domain.UpdateRoleDto) error {
-	ret := _m.Called(c, updateRole)
+// Update provides a mock function with given fields: c, updateRoleDto
+func (_m *RoleUsecase) Update(c context.Context, updateRoleDto *domain.UpdateRoleDto) error {
+	ret := _m.Called(c, updateRoleDto)
 
 	if len(ret) == 0 {
 		panic("no return value specified for Update")
@@ -118,7 +118,7 @@ func (_m *RoleUsecase) Update(c context.Context, updateRole *domain.UpdateRoleDt
 
 	var r0 error
 	if rf, ok := ret.Get(0).(func(context.Context, *domain.UpdateRoleDto) error); ok {
-		r0 = rf(c, updateRole)
+		r0 = rf(c, updateRoleDto)
 	} else {
 		r0 = ret.Error(0)
 	}

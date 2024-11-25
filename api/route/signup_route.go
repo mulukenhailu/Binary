@@ -16,5 +16,5 @@ func NewSignupRouter(env *bootstrap.Env, timeout time.Duration, db *sql.DB, grou
 		SignupUsecase: usecase.NewSignupUsecase(sr, timeout),
 	}
 
-	group.POST("/signup", sc.Signup)
+	group.POST("/user/signup", sc.Signup)
 }

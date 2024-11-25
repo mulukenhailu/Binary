@@ -26,6 +26,8 @@ func TestCreateDevice(t *testing.T) {
 		RegisteredBy : "test",
 	}
 
+	
+
 	t.Run("success", func(t *testing.T){
 		mockDeviceReposoitory.On("Create", mock.Anything, mockCreateDeviceDto).Return(nil).Once()
 
@@ -221,3 +223,4 @@ func TestFetchByCampus(t *testing.T){
 	})
 
 }
+

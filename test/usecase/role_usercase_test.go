@@ -41,14 +41,15 @@ func TestCreateRole(t *testing.T) {
 		mockRoleRepository.AssertExpectations(t)
 
 	})
+
 }
 
 func TestUpdateRole(t *testing.T) {
 	mockRoleRepository := mocks.NewRoleRespository(t)
 	mockUpdateRoleDto := &domain.UpdateRoleDto{
-		RoleId: 1,
-		RoleName:"test",
-		NewRegisterName:  "test",
+		RoleId: 		1,
+		RoleName:		"test",
+		RegisteredBy:  	"test",
 	}
 
 	t.Run("success", func(t *testing.T) {

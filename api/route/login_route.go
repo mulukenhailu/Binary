@@ -17,5 +17,5 @@ func NewLoginRouter(env *bootstrap.Env, timeout time.Duration, db *sql.DB, group
 		Env:env,
 	}
 
-	group.POST("/login", lc.Login)
+	group.POST("/user/login", lc.Login)
 }

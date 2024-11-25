@@ -42,7 +42,7 @@ func (rr *roleRepository) Update(c context.Context, updatedRole *domain.UpdateRo
 	newRole := database.UpdateRoleParams{
 		Roleid    :updatedRole.RoleId,
 		Rolename   :updatedRole.RoleName,
-		Registeredby :updatedRole.NewRegisterName,
+		Registeredby :updatedRole.RegisteredBy,
 	}
 
 	_, err := rr.pg.UpdateRole(c, newRole)

@@ -16,9 +16,9 @@ func NewUserManagerRouter(env *bootstrap.Env, timeout time.Duration, db *sql.DB,
 		UserManagementUsecase: usecase.NewUserManagerUsecase(umr, timeout),
 	}
 
-	group.PUT("/updateuser", umc.Update)
-	group.DELETE("deleteuser", umc.Delete)
-	group.GET("/userbyrolename", umc.FetchByRoleId)
-	group.GET("/userbyusername", umc.FetchByUserName)
-	group.GET("/allusers", umc.FetchUsers)
+	group.PUT("/user/updateuser", umc.Update)
+	group.DELETE("/user/deleteuser", umc.Delete)
+	group.GET("/user/userbyroleid", umc.FetchByRoleId)
+	group.GET("/user/userbyusername", umc.FetchByUserName)
+	group.GET("/user/allusers", umc.FetchUsers)
 }
