@@ -7,7 +7,8 @@ package database
 
 import (
 	"context"
-	"database/sql"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createDevice = `-- name: CreateDevice :one
@@ -25,17 +26,17 @@ RETURNING deviceid, serialnumber, port, ipaddress, name, campus, blocknumber, re
 `
 
 type CreateDeviceParams struct {
-	Serialnumber sql.NullString
+	Serialnumber pgtype.Text
 	Port         string
 	Ipaddress    string
-	Name         sql.NullString
-	Campus       sql.NullString
-	Blocknumber  sql.NullString
+	Name         pgtype.Text
+	Campus       pgtype.Text
+	Blocknumber  pgtype.Text
 	Registeredby string
 }
 
 func (q *Queries) CreateDevice(ctx context.Context, arg CreateDeviceParams) (Device, error) {
-	row := q.db.QueryRowContext(ctx, createDevice,
+	row := q.db.QueryRow(ctx, createDevice,
 		arg.Serialnumber,
 		arg.Port,
 		arg.Ipaddress,
@@ -66,7 +67,7 @@ RETURNING deviceid, serialnumber, port, ipaddress, name, campus, blocknumber, re
 `
 
 func (q *Queries) DeleteDevice(ctx context.Context, deviceid int32) (Device, error) {
-	row := q.db.QueryRowContext(ctx, deleteDevice, deviceid)
+	row := q.db.QueryRow(ctx, deleteDevice, deviceid)
 	var i Device
 	err := row.Scan(
 		&i.Deviceid,
@@ -87,8 +88,8 @@ SELECT deviceid, serialnumber, port, ipaddress, name, campus, blocknumber, regis
 WHERE Campus = $1
 `
 
-func (q *Queries) FetchByCampus(ctx context.Context, campus sql.NullString) ([]Device, error) {
-	rows, err := q.db.QueryContext(ctx, fetchByCampus, campus)
+func (q *Queries) FetchByCampus(ctx context.Context, campus pgtype.Text) ([]Device, error) {
+	rows, err := q.db.Query(ctx, fetchByCampus, campus)
 	if err != nil {
 		return nil, err
 	}
@@ -110,9 +111,6 @@ func (q *Queries) FetchByCampus(ctx context.Context, campus sql.NullString) ([]D
 			return nil, err
 		}
 		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -125,7 +123,7 @@ SELECT deviceid, serialnumber, port, ipaddress, name, campus, blocknumber, regis
 `
 
 func (q *Queries) FetchDevices(ctx context.Context) ([]Device, error) {
-	rows, err := q.db.QueryContext(ctx, fetchDevices)
+	rows, err := q.db.Query(ctx, fetchDevices)
 	if err != nil {
 		return nil, err
 	}
@@ -147,9 +145,6 @@ func (q *Queries) FetchDevices(ctx context.Context) ([]Device, error) {
 			return nil, err
 		}
 		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -172,17 +167,17 @@ RETURNING deviceid, serialnumber, port, ipaddress, name, campus, blocknumber, re
 
 type UpdateDeviceParams struct {
 	Deviceid     int32
-	Serialnumber sql.NullString
+	Serialnumber pgtype.Text
 	Port         string
 	Ipaddress    string
-	Name         sql.NullString
-	Campus       sql.NullString
-	Blocknumber  sql.NullString
+	Name         pgtype.Text
+	Campus       pgtype.Text
+	Blocknumber  pgtype.Text
 	Registeredby string
 }
 
 func (q *Queries) UpdateDevice(ctx context.Context, arg UpdateDeviceParams) (Device, error) {
-	row := q.db.QueryRowContext(ctx, updateDevice,
+	row := q.db.QueryRow(ctx, updateDevice,
 		arg.Deviceid,
 		arg.Serialnumber,
 		arg.Port,

@@ -3,16 +3,17 @@ package repository
 import (
 	"context"
 	"database/sql"
-
 	"github.com/mulukenhailu/Binary/domain"
 	"github.com/mulukenhailu/Binary/internal/database"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type rolePermissionRepository struct {
 	pg *database.Queries
+	db *sql.DB
 }
 
-func NewRolePermissionRepository(db *sql.DB) domain.RolePermissionRepository {
+func NewRolePermissionRepository(db *pgxpool.Pool) domain.RolePermissionRepository {
 	return &rolePermissionRepository{
 		pg: database.New(db),
 	}
@@ -20,18 +21,26 @@ func NewRolePermissionRepository(db *sql.DB) domain.RolePermissionRepository {
 
 // Create implements domain.RolePermissionRepository.
 func (rpr *rolePermissionRepository) Create(c context.Context, rolePermission *domain.CreatePermissionDto) error {
-	// roleId := rolePermission.RoleId
-	// permissionIdList := rolePermission.PermissionIdList
+	roleId := rolePermission.RoleId
+	permissionIdList := rolePermission.PermissionIdList
+	CreateRolePermissionParamsList := []database.CreateRolePermissionParams{}
 
-	// for _, permissionId := range permissionIdList{
+	
+	tx, err := rpr.db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+	qtx := rpr.pg.WithTx(tx)
 
-	// 	createRolePermissionParams := database.CreateRolePermissionParams{
-	// 		Roleid: roleId,
-	// 		Permissinoid: permissionId,
-	// 	}
-	// 	rpr.pg.CreateRolePermission(c, createRolePermissionParams)
-	// }
-	panic("unimplemented")
+	for _, permissionId := range permissionIdList{
+		
+		CreateRolePermissionParamsList = append(CreateRolePermissionParamsList, database.CreateRolePermissionParams{
+			Roleid: roleId,
+			Permissinoid: permissionId,
+		} )
+		rpr.pg.CreateRolePermission(c, CreateRolePermissionParamsList)
+	}
 }
 
 // Delete implements domain.RolePermissionRepository.

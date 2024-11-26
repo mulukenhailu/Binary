@@ -2,15 +2,14 @@ package bootstrap
 
 import (
 	"log"
-
-	"github.com/lib/pq"
+	"context"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func NewPgConn(env *Env) *pq.Connector {
-	connnector, err := pq.NewConnector(env.DbUrl)
+func NewPgConn(env *Env) *pgxpool.Pool{
+	connnector, err := pgxpool.New(context.Background(), env.DbUrl)
 	if err != nil{
 		log.Fatal(err)
 	}
-
 	return connnector
 }

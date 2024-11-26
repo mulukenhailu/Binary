@@ -7,7 +7,8 @@ package database
 
 import (
 	"context"
-	"database/sql"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createUser = `-- name: CreateUser :one
@@ -36,12 +37,12 @@ type CreateUserParams struct {
 	Password        string
 	Phonenumber     string
 	Address         string
-	Email           sql.NullString
+	Email           pgtype.Text
 	Registeredby    string
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (Appuser, error) {
-	row := q.db.QueryRowContext(ctx, createUser,
+	row := q.db.QueryRow(ctx, createUser,
 		arg.Roleid,
 		arg.Username,
 		arg.Firstname,
@@ -78,7 +79,7 @@ RETURNING userid, roleid, username, firstname, fathername, grandfathername, pass
 `
 
 func (q *Queries) DeleteUser(ctx context.Context, userid int32) (Appuser, error) {
-	row := q.db.QueryRowContext(ctx, deleteUser, userid)
+	row := q.db.QueryRow(ctx, deleteUser, userid)
 	var i Appuser
 	err := row.Scan(
 		&i.Userid,
@@ -117,7 +118,7 @@ WHERE Role.RoleId = $1
 `
 
 func (q *Queries) FetchByRoleName(ctx context.Context, roleid int32) ([]Appuser, error) {
-	rows, err := q.db.QueryContext(ctx, fetchByRoleName, roleid)
+	rows, err := q.db.Query(ctx, fetchByRoleName, roleid)
 	if err != nil {
 		return nil, err
 	}
@@ -143,9 +144,6 @@ func (q *Queries) FetchByRoleName(ctx context.Context, roleid int32) ([]Appuser,
 		}
 		items = append(items, i)
 	}
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
@@ -158,7 +156,7 @@ WHERE UserName = $1
 `
 
 func (q *Queries) FetchByUserName(ctx context.Context, username string) (Appuser, error) {
-	row := q.db.QueryRowContext(ctx, fetchByUserName, username)
+	row := q.db.QueryRow(ctx, fetchByUserName, username)
 	var i Appuser
 	err := row.Scan(
 		&i.Userid,
@@ -183,7 +181,7 @@ ORDER BY UserId
 `
 
 func (q *Queries) FetchUsers(ctx context.Context) ([]Appuser, error) {
-	rows, err := q.db.QueryContext(ctx, fetchUsers)
+	rows, err := q.db.Query(ctx, fetchUsers)
 	if err != nil {
 		return nil, err
 	}
@@ -208,9 +206,6 @@ func (q *Queries) FetchUsers(ctx context.Context) ([]Appuser, error) {
 			return nil, err
 		}
 		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -245,12 +240,12 @@ type UpdateUserParams struct {
 	Password        string
 	Phonenumber     string
 	Address         string
-	Email           sql.NullString
+	Email           pgtype.Text
 	Registeredby    string
 }
 
 func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (Appuser, error) {
-	row := q.db.QueryRowContext(ctx, updateUser,
+	row := q.db.QueryRow(ctx, updateUser,
 		arg.Userid,
 		arg.Roleid,
 		arg.Username,

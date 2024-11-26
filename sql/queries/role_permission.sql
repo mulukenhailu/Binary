@@ -1,7 +1,6 @@
--- name: CreateRolePermission :one
+-- name: CreateRolePermission :copyfrom
 INSERT INTO RolePermission(RoleId, PermissinoId)
-VALUES($1, $2)
-RETURNING *;
+VALUES($1, $2);
 
 -- update operation use the functionality of 
 -- 1.delete and then 
