@@ -54,7 +54,7 @@ func (lc *LoginController)Login(c *gin.Context){
 	}
 
 	signupResponse := domain.LoginResponseDto{
-		AccessToken: accessToken,
+		AccessToken:accessToken,
 	}
 
 	c.JSON(http.StatusOK, signupResponse)

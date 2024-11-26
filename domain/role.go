@@ -30,7 +30,6 @@ type DeleteRoleDto struct{
 }
 
 
-
 type RoleRespository interface{
 	Create(c context.Context, createRoleDto *CreateRoleDto) 			error
 	Update(c context.Context, updateRoleDto *UpdateRoleDto) 			error
@@ -46,3 +45,5 @@ type RoleUsecase interface{
 	FetchRoles(c context.Context) 										([]Role, error)
 	FetchByName(c context.Context, roleName string)						(Role, error)
 }
+
+

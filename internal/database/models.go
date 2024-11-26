@@ -35,9 +35,22 @@ type Device struct {
 	Registereddate sql.NullTime
 }
 
+type Permission struct {
+	Permissionid   int32
+	Permissionname string
+	Registeredby   string
+	Registereddate sql.NullTime
+}
+
 type Role struct {
 	Roleid         int32
 	Rolename       string
 	Registeredby   string
 	Registereddate sql.NullTime
+}
+
+type Rolepermission struct {
+	Rolepermissionid int32
+	Roleid           int32
+	Permissinoid     int32
 }

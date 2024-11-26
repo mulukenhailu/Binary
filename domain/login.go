@@ -8,7 +8,7 @@ type LoginRequestDto struct {
 }
 
 type LoginResponseDto struct {
-	AccessToken string `json:"access_token"`
+    AccessToken string `json:"access_token"`
 }
 
 type LoginUsecase interface {
