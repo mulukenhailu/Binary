@@ -27,6 +27,7 @@ RETURNING rolepermissionid, roleid, permissinoid
 // this way avoid the need to loop
 func (q *Queries) DeleteRolePermission(ctx context.Context, roleid int32) ([]Rolepermission, error) {
 	rows, err := q.db.Query(ctx, deleteRolePermission, roleid)
+	rows, err := q.db.Query(ctx, deleteRolePermission, roleid)
 	if err != nil {
 		return nil, err
 	}
