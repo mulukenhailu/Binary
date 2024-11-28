@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/mulukenhailu/Binary/domain"
+	"github.com/go-playground/validator/v10"
 )
 
 type RoleController struct {
@@ -18,7 +19,28 @@ func (rc *RoleController) Create(c *gin.Context){
 
 	err := c.ShouldBindJSON(&RoleDto)
 	if err != nil{
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
+
+		var validationErrors validator.ValidationErrors
+		if errors, ok := err.(validator.ValidationErrors); ok{
+			validationErrors = errors
+		}
+
+		errorMessage := make(map[string]string)
+		for _, e := range validationErrors{
+
+			field := e.Field()
+			switch field {
+			case "RoleName":
+				errorMessage["SerialNumber"] = "RoleName is required"
+			case "RegisteredBy":
+				errorMessage["RegisteredBy"] = "RegisteredBy is required"
+			default:
+				errorMessage["UnknownField"] = "Invalid field provided"
+			}
+			
+		}
+
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
 		return 
 	}
 
@@ -37,7 +59,26 @@ func (rc *RoleController) Delete(c *gin.Context){
 
 	err := c.ShouldBindJSON(&DeleteRoleDto)
 	if err != nil{
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
+
+		var validationErrors validator.ValidationErrors
+		if errors, ok := err.(validator.ValidationErrors); ok{
+			validationErrors = errors
+		}
+
+		errorMessage := make(map[string]string)
+		for _, e := range validationErrors{
+
+			field := e.Field()
+			switch field {
+			case "RoleId":
+				errorMessage["RoleId"] = "RoleId is required"
+			default:
+				errorMessage["UnknownField"] = "Invalid field provided"
+			}
+			
+		}
+
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
 		return 
 	}
 
@@ -56,7 +97,29 @@ func (rc *RoleController) Update(c *gin.Context){
 	var UpdateRoleDto domain.UpdateRoleDto
 	err := c.ShouldBindJSON(&UpdateRoleDto)
 	if err != nil{
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
+		var validationErrors validator.ValidationErrors
+		if errors, ok := err.(validator.ValidationErrors); ok{
+			validationErrors = errors
+		}
+
+		errorMessage := make(map[string]string)
+		for _, e := range validationErrors{
+
+			field := e.Field()
+			switch field {
+			case "RoleId":
+				errorMessage["RoleId"] = "RoleId is required"
+			case "RoleName":
+				errorMessage["RoleName"] = "RoleName is required"
+			case "RegisteredBy":
+				errorMessage["RegisteredBy"] = "RegisteredBy is required"
+			default:
+				errorMessage["UnknownField"] = "Invalid field provided"
+			}
+			
+		}
+
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
 		return 
 	}
 
@@ -86,7 +149,26 @@ func (rc *RoleController) FetchByName(c *gin.Context){
 
 	err := c.ShouldBindJSON(&FetchByNameDto)
 	if err != nil{
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
+
+		var validationErrors validator.ValidationErrors
+		if errors, ok := err.(validator.ValidationErrors); ok{
+			validationErrors = errors
+		}
+
+		errorMessage := make(map[string]string)
+		for _, e := range validationErrors{
+
+			field := e.Field()
+			switch field {
+			case "RoleName":
+				errorMessage["RoleName"] = "RoleName is required"
+			default:
+				errorMessage["UnknownField"] = "Invalid field provided"
+			}
+			
+		}
+
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
 		return 
 	}
 

@@ -1,10 +1,10 @@
 package bootstrap
 
-import "github.com/lib/pq"
+import "github.com/jackc/pgx/v5/pgxpool"
 
 type Application struct {
 	Env        *Env
-	Conn      *pq.Connector
+	Conn      *pgxpool.Pool
 }
 
 func App() Application{

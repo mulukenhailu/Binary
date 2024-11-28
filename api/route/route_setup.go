@@ -1,14 +1,14 @@
 package route
 
 import (
-	"database/sql"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mulukenhailu/Binary/bootstrap"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func Setup(env *bootstrap.Env, timeout time.Duration, db *sql.DB, gin *gin.Engine) {
+func Setup(env *bootstrap.Env, timeout time.Duration, db *pgxpool.Pool, gin *gin.Engine) {
 
 	protectedRoute := gin.Group("")
 	NewRoleRouter(env, timeout, db, protectedRoute)
@@ -16,4 +16,5 @@ func Setup(env *bootstrap.Env, timeout time.Duration, db *sql.DB, gin *gin.Engin
 	NewSignupRouter(env, timeout, db, protectedRoute)
 	NewUserManagerRouter(env, timeout, db, protectedRoute)
 	NewLoginRouter(env, timeout, db, protectedRoute)
+	NewRolePermissionRouter(env, timeout, db, protectedRoute)
 }

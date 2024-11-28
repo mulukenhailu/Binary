@@ -45,6 +45,7 @@ func TestFetchByUserName(t *testing.T) {
         assert.Equal(t, user, mockFetchByUserNameResponse)
         mockUserRepository.AssertExpectations(t)
     })
+    
 
     t.Run("fail", func(t *testing.T){
         mockUserRepository.On("FetchByUserName", mock.Anything, mockFetchByUserNameDto.UserName).Return(domain.User{}, errors.New("unexpected")).Once()

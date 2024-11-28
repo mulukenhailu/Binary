@@ -21,7 +21,7 @@ type CreateRoleParams struct {
 }
 
 func (q *Queries) CreateRole(ctx context.Context, arg CreateRoleParams) (Role, error) {
-	row := q.db.QueryRowContext(ctx, createRole, arg.Rolename, arg.Registeredby)
+	row := q.db.QueryRow(ctx, createRole, arg.Rolename, arg.Registeredby)
 	var i Role
 	err := row.Scan(
 		&i.Roleid,
@@ -39,7 +39,7 @@ RETURNING roleid, rolename, registeredby, registereddate
 `
 
 func (q *Queries) DeleteRole(ctx context.Context, roleid int32) (Role, error) {
-	row := q.db.QueryRowContext(ctx, deleteRole, roleid)
+	row := q.db.QueryRow(ctx, deleteRole, roleid)
 	var i Role
 	err := row.Scan(
 		&i.Roleid,
@@ -56,7 +56,7 @@ WHERE RoleName = $1
 `
 
 func (q *Queries) FetchByName(ctx context.Context, rolename string) (Role, error) {
-	row := q.db.QueryRowContext(ctx, fetchByName, rolename)
+	row := q.db.QueryRow(ctx, fetchByName, rolename)
 	var i Role
 	err := row.Scan(
 		&i.Roleid,
@@ -73,7 +73,7 @@ ORDER BY RoleId
 `
 
 func (q *Queries) FetchRoles(ctx context.Context) ([]Role, error) {
-	rows, err := q.db.QueryContext(ctx, fetchRoles)
+	rows, err := q.db.Query(ctx, fetchRoles)
 	if err != nil {
 		return nil, err
 	}
@@ -90,9 +90,6 @@ func (q *Queries) FetchRoles(ctx context.Context) ([]Role, error) {
 			return nil, err
 		}
 		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -114,7 +111,7 @@ type UpdateRoleParams struct {
 }
 
 func (q *Queries) UpdateRole(ctx context.Context, arg UpdateRoleParams) (Role, error) {
-	row := q.db.QueryRowContext(ctx, updateRole, arg.Roleid, arg.Rolename, arg.Registeredby)
+	row := q.db.QueryRow(ctx, updateRole, arg.Roleid, arg.Rolename, arg.Registeredby)
 	var i Role
 	err := row.Scan(
 		&i.Roleid,

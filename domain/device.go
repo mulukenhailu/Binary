@@ -3,45 +3,45 @@ package domain
 import "context"
 
 type CreateDeviceDto struct{
-	SerialNumber string  `json:"serial_number"`
-    Port string  `json:"port"`
-    IpAddress string  `json:"ip_address"`
-    Name string  `json:"name"`
-    Campus string  `json:"campus"`
-    BlockNumber string  `json:"block_number"`
-    RegisteredBy string  `json:"registered_by"`
+	SerialNumber    string  `json:"serial_number" binding:"required"`
+    Port            string  `json:"port" binding:"required"`
+    IpAddress       string  `json:"ip_address" binding:"required"`
+    Name            string  `json:"name" binding:"required"`
+    Campus          string  `json:"campus" binding:"required"`
+    BlockNumber     string  `json:"block_number" binding:"required"`
+    RegisteredBy    string  `json:"registered_by" binding:"required"`
 }
 
 type UpdateDeviceDto struct{
-	DeviceId int32 `json:"device_id"`
-	SerialNumber string  `json:"serial_number"`
-    Port string  `json:"port"`
-    IpAddress string  `json:"ip_address"`
-    Name string  `json:"name"`
-    Campus string  `json:"campus"`
-    BlockNumber string  `json:"block_number"`
-    RegisteredBy string  `json:"registered_by"`
+	DeviceId        int32   `json:"device_id" binding:"required"`
+	SerialNumber    string  `json:"serial_number" binding:"required"`
+    Port            string  `json:"port" binding:"required"`
+    IpAddress       string  `json:"ip_address" binding:"required"`
+    Name            string  `json:"name" binding:"required"`
+    Campus          string  `json:"campus" binding:"required"`
+    BlockNumber     string  `json:"block_number" binding:"required"`
+    RegisteredBy    string  `json:"registered_by" binding:"required"`
 }
 
 type Device struct{
-	DeviceId int32 `json:"device_id"`
-	SerialNumber string  `json:"serial_number"`
-    Port string  `json:"port"`
-    IpAddress string  `json:"ip_address"`
-    Name string  `json:"name"`
-    Campus string  `json:"campus"`
-    BlockNumber string  `json:"block_number"`
-    RegisteredBy string  `json:"registered_by"`
-	RegisteredDate string `json:"registered_date"`
+	DeviceId        int32   `json:"device_id"`
+	SerialNumber    string  `json:"serial_number"`
+    Port            string  `json:"port"`
+    IpAddress       string  `json:"ip_address"`
+    Name            string  `json:"name"`
+    Campus          string  `json:"campus"`
+    BlockNumber     string  `json:"block_number"`
+    RegisteredBy    string  `json:"registered_by"`
+	RegisteredDate  string  `json:"registered_date"`
 }
 
 
 type DeleteDeviceDto struct{
-    DeviceId int32  `json:"device_id"`
+    DeviceId        int32  `json:"device_id" binding:"required"`
 }
 
 type FetchByCampusDto struct{
-    CampusName string `json:"campus_name"`
+    CampusName      string `json:"campus_name" binding:"required"`
 }
 
 

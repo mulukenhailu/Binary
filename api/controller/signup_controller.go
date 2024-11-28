@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mulukenhailu/Binary/domain"
 	"golang.org/x/crypto/bcrypt"
+	"github.com/go-playground/validator/v10"
 )
 
 type SignupController struct {
@@ -17,7 +18,44 @@ func (sc *SignupController)Signup(c *gin.Context){
 
 	err := c.ShouldBindJSON(&signupDto)
 	if err != nil{
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
+
+		var validationErrors validator.ValidationErrors
+		if errors, ok := err.(validator.ValidationErrors); ok{
+			validationErrors = errors
+		}
+
+		errorMessage := make(map[string]string)
+		for _, e := range validationErrors{
+
+			field := e.Field()
+			switch field {
+			case "RoleId":
+				errorMessage["RoleId"] = "Role ID is required"
+			case "UserName":
+				errorMessage["UserName"] = "User Name is required"
+			case "FirstName":
+				errorMessage["FirstName"] = "First Name is required"
+			case "FatherName":
+				errorMessage["FatherName"] = "Father Name is required"
+			case "GrandFatherName":
+				errorMessage["GrandFatherName"] = "Grandfather Name is required"
+			case "Password":
+				errorMessage["Password"] = "Password is required"
+			case "PhoneNumber":
+				errorMessage["PhoneNumber"] = "Phone Number is required"
+			case "Address":
+				errorMessage["Address"] = "Address is required"
+			case "Email":
+				errorMessage["Email"] = "Email is required"
+			case "RegisteredBy":
+				errorMessage["RegisteredBy"] = "Registered By is required"
+			default:
+				errorMessage["UnknownField"] = "Invalid field provided"
+			}
+			
+		}
+
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
 		return 
 	}
 

@@ -1,7 +1,6 @@
--- name: CreateRolePermission :one
+-- name: CreateRolePermission :copyfrom
 INSERT INTO RolePermission(RoleId, PermissinoId)
-VALUES($1, $2)
-RETURNING *;
+VALUES($1, $2);
 
 -- update operation use the functionality of 
 -- 1.delete and then 
@@ -13,11 +12,11 @@ DELETE FROM RolePermission
 WHERE  RoleId = $1
 RETURNING *;
 
--- name: FetchByRoleId :many
+-- name: FetchRolePermissionByRoleId :many
 SELECT * FROM RolePermission
 WHERE RoleId = $1;
 
--- name: FetchByPermissionId :many
+-- name: FetchRolePermissionByPermissionId :many
 SELECT * FROM RolePermission
 WHERE PermissinoId = $1;
 

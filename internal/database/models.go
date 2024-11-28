@@ -5,7 +5,7 @@
 package database
 
 import (
-	"database/sql"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Appuser struct {
@@ -18,35 +18,35 @@ type Appuser struct {
 	Password        string
 	Phonenumber     string
 	Address         string
-	Email           sql.NullString
+	Email           pgtype.Text
 	Registeredby    string
-	Registereddate  sql.NullTime
+	Registereddate  pgtype.Timestamp
 }
 
 type Device struct {
 	Deviceid       int32
-	Serialnumber   sql.NullString
+	Serialnumber   pgtype.Text
 	Port           string
 	Ipaddress      string
-	Name           sql.NullString
-	Campus         sql.NullString
-	Blocknumber    sql.NullString
+	Name           pgtype.Text
+	Campus         pgtype.Text
+	Blocknumber    pgtype.Text
 	Registeredby   string
-	Registereddate sql.NullTime
+	Registereddate pgtype.Timestamp
 }
 
 type Permission struct {
 	Permissionid   int32
 	Permissionname string
 	Registeredby   string
-	Registereddate sql.NullTime
+	Registereddate pgtype.Timestamp
 }
 
 type Role struct {
 	Roleid         int32
 	Rolename       string
 	Registeredby   string
-	Registereddate sql.NullTime
+	Registereddate pgtype.Timestamp
 }
 
 type Rolepermission struct {

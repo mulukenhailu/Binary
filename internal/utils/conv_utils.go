@@ -59,3 +59,19 @@ func ConvertDbUserToDomainUser(dbUsers []database.Appuser)[]domain.User{
 	return domainUsers
 }
 
+func ConvertDbRolePermToDomainRolePerm(dbRolepermission []database.Rolepermission)[]domain.RolePermission{
+	domainRolePermission := make([]domain.RolePermission, len(dbRolepermission))
+
+	for i, dbRolePermission := range dbRolepermission{
+		domainRolePermission[i] = domain.RolePermission{
+			RolePermissionId : dbRolePermission.Rolepermissionid,
+			RoleId       	 : dbRolePermission.Roleid,
+			PermissionId  	 : dbRolePermission.Permissinoid,
+		}
+	}
+	return domainRolePermission
+}
+
+
+
+

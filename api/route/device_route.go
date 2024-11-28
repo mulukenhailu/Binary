@@ -1,7 +1,6 @@
 package route
 
 import (
-	"database/sql"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -9,9 +8,10 @@ import (
 	"github.com/mulukenhailu/Binary/bootstrap"
 	"github.com/mulukenhailu/Binary/repository"
 	"github.com/mulukenhailu/Binary/usecase"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func NewDeviceRouter(env *bootstrap.Env, timeout time.Duration, db *sql.DB, group *gin.RouterGroup) {
+func NewDeviceRouter(env *bootstrap.Env, timeout time.Duration, db *pgxpool.Pool, group *gin.RouterGroup) {
 	dr := repository.NewdeviceRepository(db)
 
 	dc := &controller.DeviceController{
