@@ -5,6 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/mulukenhailu/Binary/domain"
+	"github.com/go-playground/validator/v10"
+
 )
 
 type DeviceController struct {
@@ -17,7 +19,37 @@ func (dc *DeviceController)Create(c *gin.Context){
 
 	err := c.ShouldBindJSON(&DeviceDto)
 	if err != nil{
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
+
+		var validationErrors validator.ValidationErrors
+		if errors, ok := err.(validator.ValidationErrors); ok{
+			validationErrors = errors
+		}
+
+		errorMessage := make(map[string]string)
+		for _, e := range validationErrors{
+
+			field := e.Field()
+			switch field {
+			case "SerialNumber":
+				errorMessage["SerialNumber"] = "SerialNumber is required"
+			case "Port":
+				errorMessage["Port"] = "Port is required"
+			case "IpAddress":
+				errorMessage["IpAddress"] = "IpAddress is required"
+			case "Name":
+				errorMessage["Name"] = "Name is required"
+			case "Campus":
+				errorMessage["Campus"] = "Campus is required"
+			case "BlockNumber":
+				errorMessage["BlockNumber"] = "BlockNumber is required"
+			case "RegisteredBy":
+				errorMessage["RegisteredBy"] = "RegisteredBy is required"
+			default:
+				errorMessage["UnknownField"] = "Invalid field provided"
+			}
+			
+		}
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
 		return 
 	}
 
@@ -35,7 +67,39 @@ func (dc *DeviceController)Update(c *gin.Context){
 
 	err := c.ShouldBindJSON(&updateDeviceDto)
 	if err != nil{
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
+		var validationErrors validator.ValidationErrors
+		if errors, ok := err.(validator.ValidationErrors); ok{
+			validationErrors = errors
+		}
+
+		errorMessage := make(map[string]string)
+		for _, e := range validationErrors{
+
+			field := e.Field()
+			switch field {
+			case "DeviceId":
+				errorMessage["DeviceId"] = "DeviceId is required"
+			case "SerialNumber":
+				errorMessage["SerialNumber"] = "SerialNumber is required"
+			case "Port":
+				errorMessage["Port"] = "Port is required"
+			case "IpAddress":
+				errorMessage["IpAddress"] = "IpAddress is required"
+			case "Name":
+				errorMessage["Name"] = "Name is required"
+			case "Campus":
+				errorMessage["Campus"] = "Campus is required"
+			case "BlockNumber":
+				errorMessage["BlockNumber"] = "BlockNumber is required"
+			case "RegisteredBy":
+				errorMessage["RegisteredBy"] = "RegisteredBy is required"
+			default:
+				errorMessage["UnknownField"] = "Invalid field provided"
+			}
+			
+		}
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
+		return 
 	}
 
 	err = dc.DeviceUsecase.Update(c, &updateDeviceDto)
@@ -53,7 +117,24 @@ func (dc *DeviceController)Delete(c *gin.Context){
 
 	err := c.ShouldBindJSON(&DeleteDeviceDto)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
+		var validationErrors validator.ValidationErrors
+		if errors, ok := err.(validator.ValidationErrors); ok{
+			validationErrors = errors
+		}
+
+		errorMessage := make(map[string]string)
+		for _, e := range validationErrors{
+
+			field := e.Field()
+			switch field {
+			case "DeviceId":
+				errorMessage["DeviceId"] = "DeviceId is required"
+			default:
+				errorMessage["UnknownField"] = "Invalid field provided"
+			}
+			
+		}
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
 		return 
 	}
 
@@ -81,7 +162,24 @@ func (dc *DeviceController)FetchByCampus(c *gin.Context){
 
 	err := c.ShouldBindJSON(&FetchByCampusDto)
 	if err != nil{
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
+		var validationErrors validator.ValidationErrors
+		if errors, ok := err.(validator.ValidationErrors); ok{
+			validationErrors = errors
+		}
+
+		errorMessage := make(map[string]string)
+		for _, e := range validationErrors{
+
+			field := e.Field()
+			switch field {
+			case "Campus":
+				errorMessage["Campus"] = "Campus is required"
+			default:
+				errorMessage["UnknownField"] = "Invalid field provided"
+			}
+			
+		}
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
 		return 
 	}
 

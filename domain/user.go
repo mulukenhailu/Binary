@@ -13,47 +13,47 @@ type User struct {
 	PhoneNumber     string `json:"phone_number"`
 	Address         string `json:"address"`
 	Email           string `json:"email"`
-	RegisteredBy 	string  `json:"registered_by"`
+	RegisteredBy 	string `json:"registered_by"`
 	RegisteredDate 	string `json:"registered_date"`
 }
 
 type CreateUserDto struct {
-	RoleId          int32  `json:"role_id"`
-	UserName        string `json:"user_name"`
-	FirstName       string `json:"first_name"`
-	FatherName      string `json:"father_name"`
-	GrandFatherName string `json:"grand_father_name"`
-	Password        string `json:"password"`
-	PhoneNumber     string `json:"phone_number"`
-	Address         string `json:"address"`
-	Email           string `json:"email"`
-	RegisteredBy 	string  `json:"registered_by"`
+	RoleId          int32  `json:"role_id" binding:"required"`
+	UserName        string `json:"user_name" binding:"required"`
+	FirstName       string `json:"first_name" binding:"required"`
+	FatherName      string `json:"father_name" binding:"required"`
+	GrandFatherName string `json:"grand_father_name" binding:"required"`
+	Password        string `json:"password" binding:"required"`
+	PhoneNumber     string `json:"phone_number" binding:"required"`
+	Address         string `json:"address" binding:"required"`
+	Email           string `json:"email" binding:"required"`
+	RegisteredBy 	string `json:"registered_by" binding:"required"`
 }
 
 type UpdateUserDto struct {
-	RoleId          int32  `json:"role_id"`
-	UserId          int32  `json:"user_id"`
-	UserName        string `json:"user_name"`
-	FirstName       string `json:"first_name"`
-	FatherName      string `json:"father_name"`
-	GrandFatherName string `json:"grand_father_name"`
-	Password        string `json:"password"`
-	PhoneNumber     string `json:"phone_number"`
-	Address         string `json:"address"`
-	Email           string `json:"email"`
-	RegisteredBy 	string  `json:"registered_by"`
+	RoleId          int32  `json:"role_id" binding:"required"`
+	UserId          int32  `json:"user_id" binding:"required"`
+	UserName        string `json:"user_name" binding:"required"`
+	FirstName       string `json:"first_name" binding:"required"`
+	FatherName      string `json:"father_name" binding:"required"`
+	GrandFatherName string `json:"grand_father_name" binding:"required"`
+	Password        string `json:"password" binding:"required"`
+	PhoneNumber     string `json:"phone_number" binding:"required"`
+	Address         string `json:"address" binding:"required"`
+	Email           string `json:"email" binding:"required"`
+	RegisteredBy 	string  `json:"registered_by" binding:"required"`
 }
 
 type DeleteUserDto struct{
-	UserId int32 `json:"user_id"`
+	UserId int32 `json:"user_id" binding:"required"`
 }
 
 type FetchByRoleNameDto struct{
-	RoleId int32 `json:"role_id"`
+	RoleId int32 `json:"role_id" binding:"required"`
 }
 
 type FetchByUserNameDto struct{
-	UserName string  `json:"user_name"`
+	UserName string  `json:"user_name" binding:"required"`
 }
 
 type UserRepository interface {

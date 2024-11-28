@@ -2,18 +2,18 @@ package repository
 
 import (
 	"context"
-	"database/sql"
 
 	"github.com/mulukenhailu/Binary/domain"
 	"github.com/mulukenhailu/Binary/internal/database"
 	"github.com/mulukenhailu/Binary/internal/utils"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type roleRepository struct {
 	pg *database.Queries
 }
 
-func NewRoleRepository(db *sql.DB) domain.RoleRespository {
+func NewRoleRepository(db *pgxpool.Pool) domain.RoleRespository {
 	return &roleRepository{
 		pg:database.New(db),
 	}

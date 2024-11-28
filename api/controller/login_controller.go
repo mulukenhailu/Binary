@@ -7,6 +7,7 @@ import (
 	"github.com/mulukenhailu/Binary/bootstrap"
 	"github.com/mulukenhailu/Binary/domain"
 	"golang.org/x/crypto/bcrypt"
+	"github.com/go-playground/validator/v10"
 )
 
 type LoginController struct {
@@ -19,7 +20,28 @@ func (lc *LoginController)Login(c *gin.Context){
 
 	err := c.ShouldBindJSON(&loginRequestDto)
 	if err != nil{
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message:err.Error()})
+
+		var validationErrors validator.ValidationErrors
+		if errors, ok := err.(validator.ValidationErrors); ok{
+			validationErrors = errors
+		}
+
+		errorMessage := make(map[string]string)
+		for _, e := range validationErrors{
+
+			field := e.Field()
+			switch field {
+			case "UserName":
+				errorMessage["UserName"] = "UserName is required"
+			case "Password":
+				errorMessage["Password"] = "Password is required"
+			default:
+				errorMessage["UnknownField"] = "Invalid field provided"
+			}
+			
+		}
+
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
 		return 
 	}
 
@@ -54,7 +76,7 @@ func (lc *LoginController)Login(c *gin.Context){
 	}
 
 	signupResponse := domain.LoginResponseDto{
-		AccessToken: accessToken,
+		AccessToken:accessToken,
 	}
 
 	c.JSON(http.StatusOK, signupResponse)

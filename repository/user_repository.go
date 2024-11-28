@@ -2,18 +2,19 @@ package repository
 
 import (
 	"context"
-	"database/sql"
 
 	"github.com/mulukenhailu/Binary/domain"
 	"github.com/mulukenhailu/Binary/internal/database"
 	"github.com/mulukenhailu/Binary/internal/utils"
+	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type userRespository struct {
 	pg *database.Queries
 }
 
-func NewUserRepository(db *sql.DB) domain.UserRepository {
+func NewUserRepository(db *pgxpool.Pool) domain.UserRepository {
 	return &userRespository{
 		pg: database.New(db),
 	}
@@ -31,7 +32,7 @@ func (ur *userRespository) Create(c context.Context, createUserDto *domain.Creat
 		Password        :createUserDto.Password,
 		Phonenumber     :createUserDto.PhoneNumber,
 		Address         :createUserDto.Address,
-		Email           :sql.NullString{String: createUserDto.Email, Valid: createUserDto.Email != ""},
+		Email           :pgtype.Text{String: createUserDto.Email, Valid: createUserDto.Email != ""},
 		Registeredby    :createUserDto.RegisteredBy,
 	}
 
@@ -78,7 +79,7 @@ func (ur *userRespository) Update(c context.Context, updateUserDto *domain.Updat
 		Password         :updateUserDto.Password,
 		Phonenumber      :updateUserDto.PhoneNumber,
 		Address          :updateUserDto.Address,
-		Email            :sql.NullString{String: updateUserDto.Email, Valid: updateUserDto.Email != ""},
+		Email            :pgtype.Text{String: updateUserDto.Email, Valid: updateUserDto.Email != ""},
 		Registeredby     :updateUserDto.RegisteredBy,
 	}
 

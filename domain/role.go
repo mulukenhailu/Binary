@@ -5,30 +5,29 @@ import (
 )
 
 type Role struct{
-	RoleId int32 `json:"role_id"`
-	RoleName string `json:"role_name"`
-	RegisteredBy string `json:"registered_by"`
-	RegisteredDate string `json:"registered_date"`
+	RoleId 			int32  `json:"role_id"`
+	RoleName 		string `json:"role_name"`
+	RegisteredBy 	string `json:"registered_by"`
+	RegisteredDate 	string `json:"registered_date"`
 }
 type CreateRoleDto struct{
-	RoleName string `json:"role_name"`
-	RegisteredBy string `json:"registered_by"`
+	RoleName 		string `json:"role_name" binding:"required"`
+	RegisteredBy 	string `json:"registered_by" binding:"required"`
 }
 
 type UpdateRoleDto struct{
-	RoleId int32 `json:"role_id"`
-	RoleName string `json:"role_name"`
-	RegisteredBy string `json:"registered_by"`
+	RoleId 			int32  `json:"role_id" binding:"required"`
+	RoleName 		string `json:"role_name" binding:"required"`
+	RegisteredBy 	string `json:"registered_by" binding:"required"`
 }
 
 type FetchByNameDto struct{
-	RoleName string `json:"role_name"`
+	RoleName string `json:"role_name" binding:"required"`
 }
 
 type DeleteRoleDto struct{
-	RoleId int32 `json:"role_id"`
+	RoleId 	int32 `json:"role_id" binding:"required"`
 }
-
 
 
 type RoleRespository interface{
@@ -46,3 +45,5 @@ type RoleUsecase interface{
 	FetchRoles(c context.Context) 										([]Role, error)
 	FetchByName(c context.Context, roleName string)						(Role, error)
 }
+
+

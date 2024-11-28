@@ -1,6 +1,8 @@
 -- +goose Up
+CREATE SEQUENCE appuser_id_seq;
+
 CREATE TABLE AppUser(
-    UserId          SERIAL PRIMARY KEY,
+    UserId          INT PRIMARY KEY,
 	RoleId          INT REFERENCES Role(RoleId) ON DELETE CASCADE NOT NULL,
 	UserName        VARCHAR(255) NOT NULL UNIQUE,
 	FirstName       VARCHAR(255) NOT NULL,
@@ -18,3 +20,26 @@ CREATE TABLE AppUser(
 
 -- +goose Down
 DROP TABLE AppUser;
+DROP SEQUENCE appuser_id_seq;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

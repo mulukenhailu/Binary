@@ -1,16 +1,16 @@
 package route
 
 import (
-	"database/sql"
 	"time"
 	"github.com/gin-gonic/gin"
 	"github.com/mulukenhailu/Binary/api/controller"
 	"github.com/mulukenhailu/Binary/bootstrap"
 	"github.com/mulukenhailu/Binary/repository"
 	"github.com/mulukenhailu/Binary/usecase"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func NewUserManagerRouter(env *bootstrap.Env, timeout time.Duration, db *sql.DB, group *gin.RouterGroup){
+func NewUserManagerRouter(env *bootstrap.Env, timeout time.Duration, db *pgxpool.Pool, group *gin.RouterGroup){
 	umr := repository.NewUserRepository(db)
 	umc := &controller.UserManagementController{
 		UserManagementUsecase: usecase.NewUserManagerUsecase(umr, timeout),

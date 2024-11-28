@@ -3,12 +3,12 @@ package domain
 import "context"
 
 type LoginRequestDto struct {
-	UserName string `json:"user_name"`
-	Password string `json:"password"`
+	UserName string `json:"user_name" binding:"required"`
+	Password string `json:"password" binding:"required"`
 }
 
 type LoginResponseDto struct {
-	AccessToken string `json:"access_token"`
+    AccessToken string `json:"access_token"`
 }
 
 type LoginUsecase interface {
