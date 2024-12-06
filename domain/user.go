@@ -31,8 +31,8 @@ type CreateUserDto struct {
 }
 
 type UpdateUserDto struct {
-	RoleId          int32  `json:"role_id" binding:"required"`
 	UserId          int32  `json:"user_id" binding:"required"`
+	RoleId          int32  `json:"role_id" binding:"required"`
 	UserName        string `json:"user_name" binding:"required"`
 	FirstName       string `json:"first_name" binding:"required"`
 	FatherName      string `json:"father_name" binding:"required"`
