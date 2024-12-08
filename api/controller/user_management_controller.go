@@ -57,7 +57,7 @@ func(umc *UserManagementController)Update(c *gin.Context){
 			
 		}
 
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation Failed", Errors:  errorMessage})
 		return 
 	}
 

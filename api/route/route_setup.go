@@ -17,4 +17,5 @@ func Setup(env *bootstrap.Env, timeout time.Duration, db *pgxpool.Pool, gin *gin
 	NewUserManagerRouter(env, timeout, db, protectedRoute)
 	NewLoginRouter(env, timeout, db, protectedRoute)
 	NewRolePermissionRouter(env, timeout, db, protectedRoute)
+	NewStudentRouter(env, timeout, db, protectedRoute)
 }

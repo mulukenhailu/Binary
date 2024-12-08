@@ -73,5 +73,38 @@ func ConvertDbRolePermToDomainRolePerm(dbRolepermission []database.Rolepermissio
 }
 
 
+func ConvertDbStudentsToDomainStudents(dbStudents []database.Student)[]domain.Student{
+	domainStudents := make([]domain.Student, len(dbStudents))
+	for i, dbStudent := range dbStudents{
 
+		StudentRegularinfo := domain.StudentRegularInfo{
+			StudentId            :dbStudent.Studentid,
+			FirstName            :dbStudent.Firstname,
+			FatherName           :dbStudent.Fathername,
+			GrandFatherName      :dbStudent.Grandfathername,
+			YearOfRegistration   :dbStudent.Yearofregistration,
+			PhoneNumber          :dbStudent.Phonenumber,
+			Religion             :dbStudent.Religion,
+			Sex                  :dbStudent.Sex,
+			Status               :dbStudent.Status,
+			RegisteredBy         :dbStudent.Registeredby,
+		}
+
+		StudentAdditionInfo := domain.StudentAdditionalInfo{
+			CardNumber  :dbStudent.Cardnumber.String,
+			Photo       :dbStudent.Photo.String,
+		}
+
+
+
+		domainStudents[i] = domain.Student{
+			StudentInformationId	:dbStudent.Studentinformationid,
+			StudentRegularinfo		:&StudentRegularinfo,
+			StudentAdditionalInfo		:&StudentAdditionInfo,
+			RegisteredDate			:dbStudent.Registeredby,
+		}
+	}
+
+	return domainStudents
+}
 

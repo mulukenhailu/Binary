@@ -54,3 +54,20 @@ type Rolepermission struct {
 	Roleid           int32
 	Permissinoid     int32
 }
+
+type Student struct {
+	Studentinformationid int32
+	Studentid            string
+	Firstname            string
+	Fathername           string
+	Grandfathername      string
+	Yearofregistration   string
+	Phonenumber          string
+	Religion             string
+	Sex                  string
+	Status               string
+	Cardnumber           pgtype.Text
+	Photo                pgtype.Text
+	Registeredby         string
+	Registereddate       pgtype.Timestamp
+}

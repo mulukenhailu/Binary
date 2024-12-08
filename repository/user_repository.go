@@ -10,19 +10,19 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-type userRespository struct {
+type userRepository struct {
 	pg *database.Queries
 }
 
 func NewUserRepository(db *pgxpool.Pool) domain.UserRepository {
-	return &userRespository{
+	return &userRepository{
 		pg: database.New(db),
 	}
 }
 
 
 // Create implements domain.UserRepository.
-func (ur *userRespository) Create(c context.Context, createUserDto *domain.CreateUserDto) error {
+func (ur *userRepository) Create(c context.Context, createUserDto *domain.CreateUserDto) error {
 	userParams :=  database.CreateUserParams{
 		Roleid          :createUserDto.RoleId,
 		Username        :createUserDto.UserName,
@@ -41,34 +41,34 @@ func (ur *userRespository) Create(c context.Context, createUserDto *domain.Creat
 }
 
 // Delete implements domain.UserRepository.
-func (ur *userRespository) Delete(c context.Context, userId int32) error {
+func (ur *userRepository) Delete(c context.Context, userId int32) error {
 	_, err := ur.pg.DeleteUser(c, userId)
 	return err
 }
 
 // FetchByRoleName implements domain.UserRepository.
-func (ur *userRespository) FetchByRoleId(c context.Context, roleId int32) ([]domain.User, error) {
+func (ur *userRepository) FetchByRoleId(c context.Context, roleId int32) ([]domain.User, error) {
 	dbUsers, err := ur.pg.FetchByRoleName(c, roleId)
 	domainUsers := utils.ConvertDbUserToDomainUser(dbUsers)
 	return domainUsers, err
 }
 
 // FetchByUserName implements domain.UserRepository.
-func (ur *userRespository) FetchByUserName(c context.Context, userName string) (domain.User, error) {
+func (ur *userRepository) FetchByUserName(c context.Context, userName string) (domain.User, error) {
 	dbUser, err := ur.pg.FetchByUserName(c, userName)
 	domainUsers := utils.ConvertDbUserToDomainUser([]database.Appuser{dbUser})
 	return domainUsers[0], err
 }
 
 // FetchUsers implements domain.UserRepository.
-func (ur *userRespository) FetchUsers(c context.Context) ([]domain.User, error) {
+func (ur *userRepository) FetchUsers(c context.Context) ([]domain.User, error) {
 	dbUsers, err := ur.pg.FetchUsers(c)
 	domainUsers := utils.ConvertDbUserToDomainUser(dbUsers)
 	return domainUsers, err
 }
 
 // Update implements domain.UserRepository.
-func (ur *userRespository) Update(c context.Context, updateUserDto *domain.UpdateUserDto) error {
+func (ur *userRepository) Update(c context.Context, updateUserDto *domain.UpdateUserDto) error {
 	userUpdateParam := database.UpdateUserParams{
 		Userid           :updateUserDto.UserId,
 		Roleid           :updateUserDto.RoleId,
