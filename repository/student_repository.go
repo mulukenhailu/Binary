@@ -66,8 +66,8 @@ func (sr *studentRepository) Update(c context.Context, updateStudentDto *domain.
 
 
 // Delete implements domain.StudentRepository.
-func (sr *studentRepository) Delete(c context.Context, deleteStudentDto *domain.DeleteStudentDto) error {
-	_, err := sr.pg.DeleteStudent(c, deleteStudentDto.StudentInformationId)
+func (sr *studentRepository) Delete(c context.Context, studentInformationId int32) error {
+	_, err := sr.pg.DeleteStudent(c, studentInformationId)
 	return err
 }
 

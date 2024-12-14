@@ -18,10 +18,11 @@ func NewDeviceRouter(env *bootstrap.Env, timeout time.Duration, db *pgxpool.Pool
 		DeviceUsecase: usecase.NewDeviceUsecase(dr, timeout),
 	}
 
-	group.GET("/devicebycampus", dc.FetchByCampus)
-	group.GET("/devices", dc.FetchDevices)
-	group.POST("/newdevice", dc.Create)
-	group.PUT("/updatedevice", dc.Update)
-	group.DELETE("deletedevice", dc.Delete)
+	
+	group.GET("/device/all", dc.FetchDevices)
+	group.POST("/device/new", dc.Create)
+	group.PUT("/device/update", dc.Update)
+	group.GET("/device/campusname/:campusName", dc.FetchByCampus)
+	group.DELETE("/device/delete/:deviceId", dc.Delete)
 
 }

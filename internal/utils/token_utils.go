@@ -7,10 +7,11 @@ import (
 	"github.com/mulukenhailu/Binary/domain"
 )
 
-func CreateAccessToken(user *domain.CreateUserDto, secret string, expiry int) (accessToken string, err error) {
+func CreateAccessToken(user *domain.User, secret string, expiry int) (accessToken string, err error) {
 
 	exp := time.Now().Add(time.Hour * time.Duration(expiry)).Unix()
 	claims := &domain.JwtCustomClaim{
+		UserId				:user.UserId ,
 		UserName			:user.UserName,
 		RoleId				:user.RoleId,
 		RegisteredClaims	:jwt.RegisteredClaims{

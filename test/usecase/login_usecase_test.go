@@ -15,9 +15,8 @@ import (
 
 func TestFetchByUserName(t *testing.T) {
 	mockUserRepository := mocks.NewUserRepository(t)
-    mockFetchByUserNameDto := domain.FetchByUserNameDto{
-        UserName: "test",
-    }
+
+    userName := "test"
 
     mockFetchByUserNameResponse := domain.User{
         UserId          :1,
@@ -37,9 +36,9 @@ func TestFetchByUserName(t *testing.T) {
 
 
     t.Run("success", func(t *testing.T){
-        mockUserRepository.On("FetchByUserName", mock.Anything, mockFetchByUserNameDto.UserName).Return(mockFetchByUserNameResponse, nil).Once()
+        mockUserRepository.On("FetchByUserName", mock.Anything, userName).Return(mockFetchByUserNameResponse, nil).Once()
         uc := usecase.NewLoginUsecase(mockUserRepository, time.Second * 2)
-        user, err := uc.FetchByUserName(context.Background(), mockFetchByUserNameDto.UserName)
+        user, err := uc.FetchByUserName(context.Background(), userName)
 
         assert.NoError(t, err)
         assert.Equal(t, user, mockFetchByUserNameResponse)
@@ -48,9 +47,9 @@ func TestFetchByUserName(t *testing.T) {
     
 
     t.Run("fail", func(t *testing.T){
-        mockUserRepository.On("FetchByUserName", mock.Anything, mockFetchByUserNameDto.UserName).Return(domain.User{}, errors.New("unexpected")).Once()
+        mockUserRepository.On("FetchByUserName", mock.Anything, userName).Return(domain.User{}, errors.New("unexpected")).Once()
         uc := usecase.NewLoginUsecase(mockUserRepository, time.Second * 2)
-        user, err := uc.FetchByUserName(context.Background(), mockFetchByUserNameDto.UserName)
+        user, err := uc.FetchByUserName(context.Background(), userName)
 
         assert.Error(t, err)
         assert.Equal(t, user, domain.User{})
@@ -58,9 +57,9 @@ func TestFetchByUserName(t *testing.T) {
     })
 
     t.Run("fail", func(t *testing.T){
-        mockUserRepository.On("FetchByUserName", mock.Anything, mockFetchByUserNameDto.UserName).Return(domain.User{}, errors.New("unexpected")).Once()
+        mockUserRepository.On("FetchByUserName", mock.Anything, userName).Return(domain.User{}, errors.New("unexpected")).Once()
         uc := usecase.NewLoginUsecase(mockUserRepository, time.Second * 2)
-        user, err := uc.FetchByUserName(context.Background(), mockFetchByUserNameDto.UserName)
+        user, err := uc.FetchByUserName(context.Background(), userName)
 
         assert.Error(t, err)
         assert.Equal(t, user, domain.User{})

@@ -26,8 +26,8 @@ func (su *studentUsecase) Create(c context.Context, createStudentDto *domain.Cre
 }
 
 // Delete implements domain.StudentUsecase.
-func (su *studentUsecase) Delete(c context.Context, deleteStudentDto *domain.DeleteStudentDto) error {
-	return su.studentRepository.Delete(c, deleteStudentDto)
+func (su *studentUsecase) Delete(c context.Context, studentInformationId int32) error {
+	return su.studentRepository.Delete(c, studentInformationId)
 }
 
 // FetchByStudentId implements domain.StudentUsecase.

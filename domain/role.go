@@ -21,14 +21,6 @@ type UpdateRoleDto struct{
 	RegisteredBy 	string `json:"registered_by" binding:"required"`
 }
 
-type FetchByNameDto struct{
-	RoleName string `json:"role_name" binding:"required"`
-}
-
-type DeleteRoleDto struct{
-	RoleId 	int32 `json:"role_id" binding:"required"`
-}
-
 
 type RoleRespository interface{
 	Create(c context.Context, createRoleDto *CreateRoleDto) 			error

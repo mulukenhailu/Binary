@@ -4,9 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mulukenhailu/Binary/domain"
-	"golang.org/x/crypto/bcrypt"
 	"github.com/go-playground/validator/v10"
+	"github.com/mulukenhailu/Binary/domain"
+	"github.com/mulukenhailu/Binary/internal/utils"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type SignupController struct {
@@ -72,6 +73,7 @@ func (sc *SignupController)Signup(c *gin.Context){
 	}
 
 	signupDto.Password = string(hashPassword)
+	signupDto.UserName = utils.ConvertToSmallLetter(signupDto.UserName)
 
 	user := domain.CreateUserDto{
 		RoleId          :signupDto.RoleId,
@@ -85,6 +87,7 @@ func (sc *SignupController)Signup(c *gin.Context){
 		Email           :signupDto.Email,
 		RegisteredBy 	:signupDto.RegisteredBy,
 	}
+
 
 	err = sc.SignupUsecase.Create(c, &user)
 	if err != nil{

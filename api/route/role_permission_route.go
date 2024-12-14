@@ -18,5 +18,10 @@ func NewRolePermissionRouter(env *bootstrap.Env, timeout time.Duration, db *pgxp
 		RolePermissionUsecase: usecase.NewRolePermissionUsecase(rpr, timeout),
 	}
 
-	group.POST("/rolepermission/create", rpc.Create)
+	group.GET("/rolepermission/all", rpc.FetchRolePermissions)
+	group.GET("/rolepermission/roleid/:roleId", rpc.FetchByRoleId)
+	group.GET("/rolepermission/permissionid/:permissionId", rpc.FetchByPermissionId)
+	group.POST("/rolepermission/new", rpc.Create)
+	group.POST("/rolepermission/update", rpc.Update)
+	
 }

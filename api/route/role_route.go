@@ -19,11 +19,12 @@ func NewRoleRouter(env *bootstrap.Env, timeout time.Duration, db *pgxpool.Pool, 
 		RoleUsecase:  usecase.NewRoleUsecase(rr, timeout),
 	}
 
-	group.GET("/role", rc.FetchByName)
-	group.GET("/roles", rc.FetchRoles)
-	group.POST("/newrole", rc.Create)
-	group.PUT("/updaterole", rc.Update)
-	group.DELETE("/deleterole", rc.Delete)
+	
+	group.GET("/role/all", rc.FetchRoles)
+	group.POST("/role/new", rc.Create)
+	group.PUT("/role/update", rc.Update)
+	group.GET("/role/rolename/:roleName", rc.FetchByName)
+	group.DELETE("/role/delete/:roleId", rc.Delete)
 
 }
 

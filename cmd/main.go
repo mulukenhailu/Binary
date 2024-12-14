@@ -23,5 +23,12 @@ func main() {
 
 	route.Setup(env, timeout, conn, r)
 
+	r.NoRoute(func(c *gin.Context){
+		c.JSON(404, gin.H{
+			"error":   "Route not found",
+			"message": "The requested endpoint does not exist.",
+		})
+	})
+
 	r.Run(env.ServerAddress)
 }

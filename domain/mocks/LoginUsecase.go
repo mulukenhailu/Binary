@@ -15,7 +15,7 @@ type LoginUsecase struct {
 }
 
 // CreateAccessToken provides a mock function with given fields: user, secret, expiry
-func (_m *LoginUsecase) CreateAccessToken(user *domain.CreateUserDto, secret string, expiry int) (string, error) {
+func (_m *LoginUsecase) CreateAccessToken(user *domain.User, secret string, expiry int) (string, error) {
 	ret := _m.Called(user, secret, expiry)
 
 	if len(ret) == 0 {
@@ -24,16 +24,16 @@ func (_m *LoginUsecase) CreateAccessToken(user *domain.CreateUserDto, secret str
 
 	var r0 string
 	var r1 error
-	if rf, ok := ret.Get(0).(func(*domain.CreateUserDto, string, int) (string, error)); ok {
+	if rf, ok := ret.Get(0).(func(*domain.User, string, int) (string, error)); ok {
 		return rf(user, secret, expiry)
 	}
-	if rf, ok := ret.Get(0).(func(*domain.CreateUserDto, string, int) string); ok {
+	if rf, ok := ret.Get(0).(func(*domain.User, string, int) string); ok {
 		r0 = rf(user, secret, expiry)
 	} else {
 		r0 = ret.Get(0).(string)
 	}
 
-	if rf, ok := ret.Get(1).(func(*domain.CreateUserDto, string, int) error); ok {
+	if rf, ok := ret.Get(1).(func(*domain.User, string, int) error); ok {
 		r1 = rf(user, secret, expiry)
 	} else {
 		r1 = ret.Error(1)

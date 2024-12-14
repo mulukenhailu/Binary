@@ -76,24 +76,23 @@ func TestUpdateRole(t *testing.T) {
 
 func TestDeleteRole(t *testing.T) {
 	mockRoleRepository := mocks.NewRoleRespository(t)
-	mockDeleteRoleDto := domain.DeleteRoleDto{
-		RoleId: 1,
-	}
+
+	roleId := int32(1)
 
 	t.Run("success", func(t *testing.T) {
-		mockRoleRepository.On("Delete", mock.Anything, mockDeleteRoleDto.RoleId).Return(nil).Once()
+		mockRoleRepository.On("Delete", mock.Anything, roleId).Return(nil).Once()
 
 		uc := usecase.NewRoleUsecase(mockRoleRepository, time.Second*2)
-		err := uc.Delete(context.Background(), mockDeleteRoleDto.RoleId)
+		err := uc.Delete(context.Background(), roleId)
 		assert.NoError(t, err)
 		mockRoleRepository.AssertExpectations(t)
 	})
 
 	t.Run("fail", func(t *testing.T) {
-		mockRoleRepository.On("Delete", mock.Anything, mockDeleteRoleDto.RoleId).Return(errors.New("unexpected")).Once()
+		mockRoleRepository.On("Delete", mock.Anything, roleId).Return(errors.New("unexpected")).Once()
 
 		uc := usecase.NewRoleUsecase(mockRoleRepository, time.Second*2)
-		err := uc.Delete(context.Background(), mockDeleteRoleDto.RoleId)
+		err := uc.Delete(context.Background(), roleId)
 		assert.Error(t, err)
 		mockRoleRepository.AssertExpectations(t)
 	})
@@ -101,9 +100,7 @@ func TestDeleteRole(t *testing.T) {
 
 func TestFetchByNameRole(t *testing.T) {
 	mockRoleRepository := mocks.NewRoleRespository(t)
-	mockFetchByNameDto := domain.FetchByNameDto{
-		RoleName: "test",
-	}
+	roleName := "test"
 
 	mockRole := domain.Role{
 		RoleId : 1,
@@ -113,10 +110,10 @@ func TestFetchByNameRole(t *testing.T) {
 	}
 
 	t.Run("success", func(t *testing.T){
-		mockRoleRepository.On("FetchByName", mock.Anything, mockFetchByNameDto.RoleName).Return(mockRole, nil).Once()
+		mockRoleRepository.On("FetchByName", mock.Anything, roleName).Return(mockRole, nil).Once()
 
 		uc := usecase.NewRoleUsecase(mockRoleRepository, time.Second * 2)
-		role, err := uc.FetchByName(context.Background(), mockFetchByNameDto.RoleName)
+		role, err := uc.FetchByName(context.Background(), roleName)
 		assert.NoError(t, err)
 		assert.Equal(t, mockRole, role)
 		mockRoleRepository.AssertExpectations(t)
@@ -124,10 +121,10 @@ func TestFetchByNameRole(t *testing.T) {
 	})
 
 	t.Run("fail", func(t *testing.T) {
-		mockRoleRepository.On("FetchByName", mock.Anything, mockFetchByNameDto.RoleName).Return(domain.Role{}, errors.New("unexpected")).Once()
+		mockRoleRepository.On("FetchByName", mock.Anything, roleName).Return(domain.Role{}, errors.New("unexpected")).Once()
 
 		uc := usecase.NewRoleUsecase(mockRoleRepository, time.Second * 2)
-		role, err := uc.FetchByName(context.Background(), mockFetchByNameDto.RoleName)
+		role, err := uc.FetchByName(context.Background(), roleName)
 		assert.Error(t, err)
 		assert.Equal(t, domain.Role{}, role)
 

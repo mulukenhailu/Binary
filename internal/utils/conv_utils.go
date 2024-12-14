@@ -1,9 +1,25 @@
 package utils
 
 import (
+	"strconv"
 	"github.com/mulukenhailu/Binary/domain"
 	"github.com/mulukenhailu/Binary/internal/database"
+	"strings"
 )
+
+func ConverParamID(paramID string) (*int32, error){
+	bit64, err := strconv.ParseInt(paramID, 10, 32)
+	if err != nil{
+		return nil, err
+	}
+
+	bit32 := int32(bit64)
+	return &bit32, nil
+}
+
+func ConvertToSmallLetter(input string) string{
+	return strings.ToLower(input)
+}
 
 func ConvertDbRolesToDomainRoles(dbRoles []database.Role) []domain.Role{
 	domainRoles := make([]domain.Role, len(dbRoles))

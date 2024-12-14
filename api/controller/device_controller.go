@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mulukenhailu/Binary/domain"
 	"github.com/go-playground/validator/v10"
-
+	"github.com/mulukenhailu/Binary/domain"
+	"github.com/mulukenhailu/Binary/internal/utils"
 )
 
 type DeviceController struct {
@@ -52,6 +52,8 @@ func (dc *DeviceController)Create(c *gin.Context){
 		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
 		return 
 	}
+
+	DeviceDto.Campus = utils.ConvertToSmallLetter(DeviceDto.Campus)
 
 	err = dc.DeviceUsecase.Create(c, &DeviceDto)
 	if err != nil{
@@ -102,6 +104,7 @@ func (dc *DeviceController)Update(c *gin.Context){
 		return 
 	}
 
+	updateDeviceDto.Campus = utils.ConvertToSmallLetter(updateDeviceDto.Campus)
 	err = dc.DeviceUsecase.Update(c, &updateDeviceDto)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError, domain.ErrorResponse{Message: err.Error()})
@@ -113,32 +116,15 @@ func (dc *DeviceController)Update(c *gin.Context){
 }
 
 func (dc *DeviceController)Delete(c *gin.Context){
-	var DeleteDeviceDto  domain.DeleteDeviceDto
-
-	err := c.ShouldBindJSON(&DeleteDeviceDto)
-	if err != nil {
-		var validationErrors validator.ValidationErrors
-		if errors, ok := err.(validator.ValidationErrors); ok{
-			validationErrors = errors
-		}
-
-		errorMessage := make(map[string]string)
-		for _, e := range validationErrors{
-
-			field := e.Field()
-			switch field {
-			case "DeviceId":
-				errorMessage["DeviceId"] = "DeviceId is required"
-			default:
-				errorMessage["UnknownField"] = "Invalid field provided"
-			}
-			
-		}
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
-		return 
+	deviceId := c.Param("deviceId")
+	
+	bit32, err := utils.ConverParamID(deviceId)
+	if err != nil{
+		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
+		return
 	}
 
-	err = dc.DeviceUsecase.Delete(c, DeleteDeviceDto.DeviceId)
+	err = dc.DeviceUsecase.Delete(c, *bit32)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError, domain.ErrorResponse{Message: err.Error()})
 		return 
@@ -148,46 +134,27 @@ func (dc *DeviceController)Delete(c *gin.Context){
 
 }
 
+
+
+func (dc *DeviceController)FetchByCampus(c *gin.Context){
+	campusName := c.Param("campusName")
+	campusName = utils.ConvertToSmallLetter((campusName))
+
+
+	devices, err := dc.DeviceUsecase.FetchByCampus(c, campusName)
+	if err != nil{
+		c.JSON(http.StatusInternalServerError, domain.ErrorResponse{Message: err.Error()})
+		return 
+	}
+
+	c.JSON(http.StatusOK, devices)
+}
+
 func (dc *DeviceController)FetchDevices(c *gin.Context){
 	devices, err := dc.DeviceUsecase.FetchDevices(c)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError, domain.ErrorResponse{Message: err.Error()})
 		return 
 	}
-	c.JSON(http.StatusOK, devices)
-}
-
-func (dc *DeviceController)FetchByCampus(c *gin.Context){
-	var FetchByCampusDto domain.FetchByCampusDto
-
-	err := c.ShouldBindJSON(&FetchByCampusDto)
-	if err != nil{
-		var validationErrors validator.ValidationErrors
-		if errors, ok := err.(validator.ValidationErrors); ok{
-			validationErrors = errors
-		}
-
-		errorMessage := make(map[string]string)
-		for _, e := range validationErrors{
-
-			field := e.Field()
-			switch field {
-			case "Campus":
-				errorMessage["Campus"] = "Campus is required"
-			default:
-				errorMessage["UnknownField"] = "Invalid field provided"
-			}
-			
-		}
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: "Validation failed", Errors:  errorMessage})
-		return 
-	}
-
-	devices, err := dc.DeviceUsecase.FetchByCampus(c, FetchByCampusDto.CampusName)
-	if err != nil{
-		c.JSON(http.StatusInternalServerError, domain.ErrorResponse{Message: err.Error()})
-		return 
-	}
-
 	c.JSON(http.StatusOK, devices)
 }

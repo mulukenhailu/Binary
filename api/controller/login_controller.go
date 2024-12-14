@@ -56,9 +56,10 @@ func (lc *LoginController)Login(c *gin.Context){
 		return 
 	}
 
-	user := domain.CreateUserDto{
-		RoleId          :DbUser.RoleId,
+	user := domain.User{
+		UserId			:DbUser.UserId,
 		UserName        :DbUser.UserName,
+		RoleId          :DbUser.RoleId,
 		FirstName       :DbUser.FirstName,
 		FatherName      :DbUser.FatherName,
 		GrandFatherName :DbUser.GrandFatherName,

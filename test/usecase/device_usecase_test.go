@@ -88,25 +88,24 @@ func TestUpdateDevice(t *testing.T){
 
 func TestDeleteDevice(t *testing.T){
 	mockDeviceReposoitory := mocks.NewDeviceRepository(t)
-	mockDeleteDeviceDto := domain.DeleteDeviceDto{
-		DeviceId: 1,
-	}
+
+	deviceId := int32(1)
 
 	t.Run("success", func(t *testing.T){
-		mockDeviceReposoitory.On("Delete", mock.Anything, mockDeleteDeviceDto.DeviceId).Return(nil).Once()
+		mockDeviceReposoitory.On("Delete", mock.Anything, deviceId).Return(nil).Once()
 
 		uc := usecase.NewDeviceUsecase(mockDeviceReposoitory, time.Second * 2)
-		err := uc.Delete(context.Background(), mockDeleteDeviceDto.DeviceId)
+		err := uc.Delete(context.Background(), deviceId)
 
 		assert.NoError(t, err)
 		mockDeviceReposoitory.AssertExpectations(t)
 	})
 
 	t.Run("fail", func(t *testing.T){
-		mockDeviceReposoitory.On("Delete", mock.Anything, mockDeleteDeviceDto.DeviceId).Return(errors.New("enexpected")).Once()
+		mockDeviceReposoitory.On("Delete", mock.Anything, deviceId).Return(errors.New("enexpected")).Once()
 
 		uc := usecase.NewDeviceUsecase(mockDeviceReposoitory, time.Second * 2)
-		err := uc.Delete(context.Background(), mockDeleteDeviceDto.DeviceId)
+		err := uc.Delete(context.Background(), deviceId)
 
 		assert.Error(t, err)
 		mockDeviceReposoitory.AssertExpectations(t)
@@ -170,9 +169,7 @@ func TestFetchDevices(t *testing.T){
 func TestFetchByCampus(t *testing.T){
 	mockDeviceReposoitory := mocks.NewDeviceRepository(t)
 
-	mockFetchDeviceByCampusDto := domain.FetchByCampusDto{
-		CampusName: "test",
-	}
+	campusName := "test"
 
 	mockDomainDevices := []domain.Device{
 		{
@@ -199,10 +196,10 @@ func TestFetchByCampus(t *testing.T){
 		},
 	}
 	t.Run("success", func(t *testing.T){
-		mockDeviceReposoitory.On("FetchByCampus", mock.Anything, mockFetchDeviceByCampusDto.CampusName).Return(mockDomainDevices, nil).Once()
+		mockDeviceReposoitory.On("FetchByCampus", mock.Anything, campusName).Return(mockDomainDevices, nil).Once()
 
 		uc := usecase.NewDeviceUsecase(mockDeviceReposoitory, time.Second * 2)
-		devices, err := uc.FetchByCampus(context.Background(), mockFetchDeviceByCampusDto.CampusName)
+		devices, err := uc.FetchByCampus(context.Background(), campusName)
 
 		assert.NoError(t, err)
 		assert.Equal(t, devices, mockDomainDevices)
@@ -211,10 +208,10 @@ func TestFetchByCampus(t *testing.T){
 	})
 
 	t.Run("fail", func(t *testing.T){
-		mockDeviceReposoitory.On("FetchByCampus", mock.Anything, mockFetchDeviceByCampusDto.CampusName).Return([]domain.Device{}, errors.New("unexpected")).Once()
+		mockDeviceReposoitory.On("FetchByCampus", mock.Anything, campusName).Return([]domain.Device{}, errors.New("unexpected")).Once()
 
 		uc := usecase.NewDeviceUsecase(mockDeviceReposoitory, time.Second * 2)
-		devices, err := uc.FetchByCampus(context.Background(), mockFetchDeviceByCampusDto.CampusName)
+		devices, err := uc.FetchByCampus(context.Background(), campusName)
 
 		assert.Error(t, err)
 		assert.Equal(t, devices, []domain.Device{})

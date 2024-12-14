@@ -60,28 +60,19 @@ type UpdateStudentDto struct {
 	CardNumber  		  string `json:"card_number"`
 	Photo       		  string `json:"photo"`
 }
-
-type DeleteStudentDto struct{
-  StudentInformationId  int32 `json:"student_information_id" binding:"required"`
-}
-
-type FetchByStudentIdDto struct {
-  StudentId string  `json:"student_id" binding:"required"`
-}
-
 type StudentRepository interface {
+	FetchStudents(c context.Context)                                        ([]Student, error)
 	Create(c context.Context, createStudentDto *CreateStudentDto)           error
 	Update(c context.Context, updateStudentDto *UpdateStudentDto)           error
-	Delete(c context.Context, deleteStudentDto *DeleteStudentDto)           error
-	FetchStudents(c context.Context)                                        ([]Student, error)
+	Delete(c context.Context, studentInformationId int32)           		error
 	FetchByStudentId(c context.Context, studentId string) 					(Student, error)
 }
 
 type StudentUsecase interface {
+	FetchStudents(c context.Context)                                        ([]Student, error)
 	Create(c context.Context, createStudentDto *CreateStudentDto)           error
 	Update(c context.Context, updateStudentDto *UpdateStudentDto)           error
-	Delete(c context.Context, deleteStudentDto *DeleteStudentDto)           error
-	FetchStudents(c context.Context)                                        ([]Student, error)
+	Delete(c context.Context, studentInformationId int32)           		error
 	FetchByStudentId(c context.Context, studentId string) 					(Student, error)
 }
 

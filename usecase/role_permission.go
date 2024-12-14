@@ -36,10 +36,10 @@ func (rpu *rolePermission) Update(c context.Context, updatePermission *domain.Up
 }
 
 // Delete implements domain.RolePermissionUsecase.
-func (rpu *rolePermission) Delete(c context.Context, deletePermission *domain.DeletePermissionDto) error {
+func (rpu *rolePermission) Delete(c context.Context, roleId int32) error {
 	ctx, cancel := context.WithTimeout(c, rpu.contextTimeout)
 	defer cancel()
-	return rpu.rolePermissionRepository.Delete(ctx, deletePermission)
+	return rpu.rolePermissionRepository.Delete(ctx, roleId)
 }
 
 // FetchByPermissionId implements domain.RolePermissionUsecase.
@@ -54,6 +54,14 @@ func (rpu *rolePermission) FetchByRoleId(c context.Context, roleId int32) ([]dom
 	ctx, cancel := context.WithTimeout(c, rpu.contextTimeout)
 	defer cancel()
 	return rpu.rolePermissionRepository.FetchByRoleId(ctx, roleId)
+}
+
+
+// FetchRolePermissions implements domain.RolePermissionUsecase.
+func (rpu *rolePermission) FetchRolePermissions(c context.Context) ([]domain.RolePermission, error) {
+	ctx, cancel := context.WithTimeout(c, rpu.contextTimeout)
+	defer cancel()
+	return rpu.rolePermissionRepository.FetchRolePermissions(ctx)
 }
 
 

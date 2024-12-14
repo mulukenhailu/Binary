@@ -96,8 +96,8 @@ func (rpr *rolePermissionRepository) Create(c context.Context, createPermission 
 
 
 // Delete implements domain.RolePermissionRepository.
-func (rpr *rolePermissionRepository) Delete(c context.Context, deletePermission *domain.DeletePermissionDto) error {
-	_, err := rpr.pg.DeleteRolePermission(c, deletePermission.RoleId)
+func (rpr *rolePermissionRepository) Delete(c context.Context, roleId int32) error {
+	_, err := rpr.pg.DeleteRolePermission(c, roleId)
 	return err
 }
 
@@ -106,10 +106,7 @@ func (rpr *rolePermissionRepository) Update(c context.Context, updatePermission 
 	roleId := updatePermission.RoleId
 	permissionListId := updatePermission.PermissionIdList
 
-	deletePermissionDto := domain.DeletePermissionDto{
-		RoleId: roleId,
-	}
-	err := rpr.Delete(c, &deletePermissionDto)
+	err := rpr.Delete(c, roleId)
 	if err != nil{
 		return err
 	}
@@ -135,6 +132,13 @@ func (rpr *rolePermissionRepository) FetchByRoleId(c context.Context, roleId int
 	roleRoleId, err := rpr.pg.FetchRolePermissionByRoleId(c, roleId)
 	domainroleRoleId := utils.ConvertDbRolePermToDomainRolePerm(roleRoleId)
 	return domainroleRoleId, err
+}
+
+
+func(rpr *rolePermissionRepository) FetchRolePermissions(c context.Context)([]domain.RolePermission, error){
+	dbRolePermissions, err := rpr.pg.FetchRolePermissions(c)
+	domainRolePermission := utils.ConvertDbRolePermToDomainRolePerm(dbRolePermissions)
+	return domainRolePermission, err
 }
 
 

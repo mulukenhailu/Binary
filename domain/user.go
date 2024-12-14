@@ -44,17 +44,6 @@ type UpdateUserDto struct {
 	RegisteredBy 	string  `json:"registered_by" binding:"required"`
 }
 
-type DeleteUserDto struct{
-	UserId int32 `json:"user_id" binding:"required"`
-}
-
-type FetchByRoleNameDto struct{
-	RoleId int32 `json:"role_id" binding:"required"`
-}
-
-type FetchByUserNameDto struct{
-	UserName string  `json:"user_name" binding:"required"`
-}
 
 type UserRepository interface {
 	Create(c context.Context, createUserDto *CreateUserDto) error

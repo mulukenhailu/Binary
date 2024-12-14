@@ -18,6 +18,10 @@ func NewStudentRouter(env *bootstrap.Env, timeout time.Duration, db *pgxpool.Poo
 		StudentUsecase: usecase.NewStudentUsecase(sr, timeout),
 	 }
 
-	 group.POST("/student/create", rc.Create)
-	 group.POST("/student/update", rc.Update)
+	 group.GET("/student/all", rc.FetchStudents)
+	 group.POST("/student/new", rc.Create)
+	 group.PUT("/student/update", rc.Update)
+	 group.GET("/student/studentid/:studentId", rc.FetchByStudentId)
+	 group.DELETE("/student/delete/:studentInformationId", rc.Delete)
+	
 }

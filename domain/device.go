@@ -36,14 +36,6 @@ type Device struct{
 }
 
 
-type DeleteDeviceDto struct{
-    DeviceId        int32  `json:"device_id" binding:"required"`
-}
-
-type FetchByCampusDto struct{
-    CampusName      string `json:"campus_name" binding:"required"`
-}
-
 
 type DeviceUsecase interface {
 	Create(c context.Context, createDeviceDto *CreateDeviceDto) error

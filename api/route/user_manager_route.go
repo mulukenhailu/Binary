@@ -16,9 +16,9 @@ func NewUserManagerRouter(env *bootstrap.Env, timeout time.Duration, db *pgxpool
 		UserManagementUsecase: usecase.NewUserManagerUsecase(umr, timeout),
 	}
 
-	group.PUT("/user/updateuser", umc.Update)
-	group.DELETE("/user/deleteuser", umc.Delete)
-	group.GET("/user/userbyroleid", umc.FetchByRoleId)
-	group.GET("/user/userbyusername", umc.FetchByUserName)
-	group.GET("/user/allusers", umc.FetchUsers)
+	group.GET("/user/all", umc.FetchUsers)
+	group.PUT("/user/update", umc.Update)
+	group.GET("/user/username/:userName", umc.FetchByUserName)
+	group.GET("/user/role/:roleId", umc.FetchByRoleId)
+	group.DELETE("/user/delete/:userId", umc.Delete)
 }
